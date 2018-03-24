@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -188,20 +189,67 @@ public class EmployeeRepositoryJdbc implements EmployeeRepository {
 
 	@Override
 	public boolean insertEmployeeToken(EmployeeToken employeeToken) {
-		// TODO Auto-generated method stub
+		try(Connection connection = ConnectionUtil.getConnection()) {
+			int statementIndex = 0;
+			String command = "INSERT INTO PASSWORD_RECOVERY VALUES(NULL,NULL,?,?)";
+
+			PreparedStatement statement = connection.prepareStatement(command);
+
+			statement.setTimestamp(++statementIndex, Timestamp.valueOf(employeeToken.getCreationDate()));
+			statement.setInt(++statementIndex, employeeToken.getId());
+
+			if(statement.executeUpdate() > 0) {
+				return true;
+			}
+		} catch (SQLException e) {
+			logger.warn("Token creation failed, exception thrown", e);
+		}
 		return false;
 	}
 
 	@Override
 	public boolean deleteEmployeeToken(EmployeeToken employeeToken) {
-		// TODO Auto-generated method stub
+		try(Connection connection = ConnectionUtil.getConnection()) {
+			int statementIndex = 0;
+			String command = "DELETE FROM PASSWORD_RECOVERY WHERE PR_ID = ?";
+
+			PreparedStatement statement = connection.prepareStatement(command);
+			
+			statement.setInt(++statementIndex, employeeToken.getId());
+
+			if(statement.executeUpdate() > 0) {
+				return true;
+			}
+		} catch (SQLException e) {
+			logger.warn("Token deletion failed, exception thrown", e);
+		}
 		return false;
 	}
 
 	@Override
 	public EmployeeToken selectEmployeeToken(EmployeeToken employeeToken) {
-		// TODO Auto-generated method stub
-		return null;
+		try(Connection connection = ConnectionUtil.getConnection()) {
+			int statementIndex = 0;
+			String command = "SELECT * FROM PASSWORD_RECOVERY WHERE PR_ID = ?";
+			PreparedStatement statement = connection.prepareStatement(command);
+			statement.setInt(++statementIndex, employeeToken.getRequester().getId());
+			ResultSet result = statement.executeQuery();
+
+			if(result.next()) {
+				return new EmployeeToken(
+						result.getInt("PR_ID"),
+						result.getString("PR_TOKEN"),
+						result.getTimestamp("PR_TIME").toLocalDateTime(),
+						EmployeeRepositoryJdbc.getInstance().select(result.getInt("U_ID"))
+						);
+			}
+		} catch (SQLException e) {
+			logger.warn("Employee retrieval failed due to exception being thrown.", e);
+		}
+		return new EmployeeToken();
 	}
 
+
 }
+
+
