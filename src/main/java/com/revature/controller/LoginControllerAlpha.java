@@ -29,7 +29,7 @@ public class LoginControllerAlpha implements LoginController {
 			return new ClientMessage(FinalUtil.LOGIN_FAIL);
 		} else {
 			request.getSession().setAttribute("employee", employee);
-			return "home.html";
+			return employee;
 		}
 	}
 

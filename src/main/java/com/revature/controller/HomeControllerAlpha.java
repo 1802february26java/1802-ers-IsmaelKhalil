@@ -9,26 +9,18 @@ import com.revature.model.Employee;
 public class HomeControllerAlpha implements HomeController {
 	
 	private static Logger logger = Logger.getLogger(HomeControllerAlpha.class);
-
-	private static HomeController homeController = new HomeControllerAlpha();
 	
-	private HomeControllerAlpha() {}
-	
-	public static HomeController getInstance() {
-		return homeController;
-	}
-
 	@Override
 	public String showEmployeeHome(HttpServletRequest request) {
-		Employee loggedEmployee = (Employee) request.getSession().getAttribute("loggedEmployee");
-		
-		/* If employee is not logged in */
-		if(loggedEmployee == null) {
-			logger.trace("Employee not found. You will be redirected to the login page.");
+		logger.trace("Showing employee home");
+		Employee employee = (Employee) request.getSession().getAttribute("employee");
+		if (employee != null) {
+			logger.trace("Showing home");
+			return "home.html";
+		} else {
+			logger.trace("Sending back to login");
 			return "login.html";
 		}
-		
-		return "home.html";
 	}
 
 }

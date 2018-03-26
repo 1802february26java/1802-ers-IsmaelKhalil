@@ -8,12 +8,39 @@ window.onload = () => {
             document.getElementById("registrationMessage").innerHTML = '<span class="label label-danger label-center">Password mismatch.</span>';
             return;
         }
-        
+
         //Get the rest fields
         let firstName = document.getElementById("firstName").value;
         let lastName = document.getElementById("lastName").value;
         let username = document.getElementById("username").value;
+        let email = document.getElementById("email").value;
         
+        if (firstName === "") {
+            firstName = sessionStorage.getItem("firstName");
+        }
+
+        if (lastName === "") {
+            firstName = sessionStorage.getItem("lastName");
+        }
+        
+        if (username === "") {
+            username = sessionStorage.getItem("username");
+        }
+        
+        if (password === "") {
+            password = sessionStorage.getItem("password");
+        }
+        
+        if (email === "") {
+            email = sessionStorage.getItem("email");
+        }
+        
+        //Dropdown 
+        var e = document.getElementById("employeeRoleID");
+        var employeeRoleID = e.options[e.selectedIndex].value;
+
+        console.log(employeeRoleID);
+
         //AJAX Logic
         let xhr = new XMLHttpRequest();
         

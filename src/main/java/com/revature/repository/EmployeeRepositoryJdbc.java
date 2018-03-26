@@ -99,8 +99,8 @@ public class EmployeeRepositoryJdbc implements EmployeeRepository {
 				Employee employee = new Employee();
 
 				employee.setId(result.getInt("U_ID"));
-				employee.setFirstName(result.getString("U_FIRST_NAME"));
-				employee.setLastName(result.getString("U_LAST_NAME"));
+				employee.setFirstName(result.getString("U_FIRSTNAME"));
+				employee.setLastName(result.getString("U_LASTNAME"));
 				employee.setUsername(result.getString("U_USERNAME"));
 				employee.setPassword(result.getString("U_PASSWORD"));
 				employee.setEmail(result.getString("U_EMAIL"));
@@ -127,8 +127,8 @@ public class EmployeeRepositoryJdbc implements EmployeeRepository {
 				Employee employee = new Employee();
 
 				employee.setId(result.getInt("U_ID"));
-				employee.setFirstName(result.getString("U_FIRST_NAME"));
-				employee.setLastName(result.getString("U_LAST_NAME"));
+				employee.setFirstName(result.getString("U_FIRSTNAME"));
+				employee.setLastName(result.getString("U_LASTNAME"));
 				employee.setUsername(result.getString("U_USERNAME"));
 				employee.setPassword(result.getString("U_PASSWORD"));
 				employee.setEmail(result.getString("U_EMAIL"));
@@ -154,8 +154,8 @@ public class EmployeeRepositoryJdbc implements EmployeeRepository {
 				Employee employee = new Employee();
 
 				employee.setId(result.getInt("U_ID"));
-				employee.setFirstName(result.getString("U_FIRST_NAME"));
-				employee.setLastName(result.getString("U_LAST_NAME"));
+				employee.setFirstName(result.getString("U_FIRSTNAME"));
+				employee.setLastName(result.getString("U_LASTNAME"));
 				employee.setUsername(result.getString("U_USERNAME"));
 				employee.setPassword(result.getString("U_PASSWORD"));
 				employee.setEmail(result.getString("U_EMAIL"));

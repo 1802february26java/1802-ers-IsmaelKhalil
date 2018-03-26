@@ -64,10 +64,10 @@ public class EmployeeServiceAlpha implements EmployeeService {
 	@Override
 	public boolean isUsernameTaken(Employee employee) {
 		Employee loggedEmployee = EmployeeRepositoryJdbc.getInstance().select(employee.getUsername());
-		if(loggedEmployee.getUsername().equals(employee.getUsername())) {
-			return false;
-		} else {
+		if(loggedEmployee != null && loggedEmployee.getUsername().equals(employee.getUsername())) {
 			return true;
+		} else {
+			return false;
 		}
 	}
 

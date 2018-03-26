@@ -60,7 +60,7 @@ public class EmployeeInformationControllerAlpha implements EmployeeInformationCo
 		if(loggedEmployee == null) {
 			return "login.html";
 		}
-
+		
 		Employee employee = new Employee (
 				loggedEmployee.getId(),
 				request.getParameter("firstName"),
