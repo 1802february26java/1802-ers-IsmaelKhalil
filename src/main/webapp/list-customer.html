@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Login</title>
+    <title>List Customers</title>
 
     <link rel="icon" href="images/customer.ico" />
 
@@ -21,32 +21,35 @@
     <nav class="navbar navbar-default">
         <div class="container-fluid">
             <div class="navbar-header">
-                <a href="login.do" class="navbar-brand"><strong>Login</strong></a>
+                <a href="home.do" class="navbar-brand"><strong>Home</strong></a>
             </div>
+            <ul class="nav navbar-nav">
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><strong>Operations</strong><span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="getAll.do">List Customers</a></li>
+                        <li><a>Another Option</a></li>
+                    </ul>
+                </li>
+            </ul>
             <div class="nav navbar-nav navbar-right">
-                <a href="register.do" class="navbar-brand"><strong><small>Register</small></strong></a>
+                <a href="logout.do" class="navbar-brand"><strong><small>Logout</small></strong></a>
             </div>
         </div>
     </nav>
     <div class="col-md-4 col-md-offset-4">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3>Authentication</h3>
+                <h3>Customers</h3>
             </div>
-            <div class="form-group">
-                <input id="username" name="username" placeholder="Username" class="form-control" />
-            </div>
-            <div class="form-group">
-                <input id="password" name="password" placeholder="Password" type="password" class="form-control password-large" />
-            </div>
-            <div id="loginMessage"></div>
-            <button id="login" class="btn btn-md btn-success btn-block">Login</button>
+            <ul id = "customerList" class = "list-group">
+            </ul>
+            <div id="listMessage"></div>
+            <button id="getCustomers" class="btn btn-md btn-success btn-block btn-list">GET</button>
             <div class="panel-footer">
-                <a>Forgot your password?</a>
             </div>
         </div>
     </div>
-    <!--Javascript-->
-    <script src="js/login.js"></script>
+    <script src = "js/list-customer.js"></script>
 </body>
 </html>

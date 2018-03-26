@@ -1,5 +1,5 @@
 /**
- * The request layer represents an implementation of the FrontController design pattern.
+ * The request layer represents an implementation of the ERS design pattern.
  *
  * It should only contain one Servlet and one RequestHelper.
  * 

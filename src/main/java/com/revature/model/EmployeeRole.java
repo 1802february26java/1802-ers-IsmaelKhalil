@@ -30,6 +30,10 @@ public class EmployeeRole implements Serializable {
 		this.type = type;
 	}
 	
+	public EmployeeRole(int id) {
+		this.id = id;
+	}
+	
 	public EmployeeRole(int id, String type) {
 		this.id = id;
 		this.type = type;

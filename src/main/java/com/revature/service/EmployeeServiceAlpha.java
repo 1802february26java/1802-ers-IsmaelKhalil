@@ -2,30 +2,42 @@ package com.revature.service;
 
 import java.util.Set;
 
+import org.apache.log4j.Logger;
+
 import com.revature.model.Employee;
 import com.revature.model.EmployeeToken;
+import com.revature.repository.EmployeeRepository;
 import com.revature.repository.EmployeeRepositoryJdbc;
 
 public class EmployeeServiceAlpha implements EmployeeService {
+	   
+		private static Logger logger = Logger.getLogger(EmployeeServiceAlpha.class);
+		
+	    private static EmployeeService employeeService = new EmployeeServiceAlpha();
+
+		private EmployeeRepository repository = EmployeeRepositoryJdbc.getInstance();
+		
+		private EmployeeServiceAlpha() { }
+		
+		public static EmployeeService getInstance() {
+			return employeeService;
+		}
 
 	@Override
 	public Employee authenticate(Employee employee) {
-		//Information on the database
-		Employee loggedEmployee = EmployeeRepositoryJdbc.getInstance().select(employee.getUsername());
+	
+        Employee loggedEmployee = repository.select(employee.getUsername());
+                
+        if (loggedEmployee != null && loggedEmployee.getPassword().equals(repository.getPasswordHash(employee))) {
+            return loggedEmployee;
+        }
+        return null;
+    }
 
-		//Wont work because the password is in the form of a hash
-		//What we have stored in the database is the Username + Password hash. We can't compare the blank password
-		//provided by the user against the hash. Therefore, we have to obtain the hash of the user input.
-		//If the hashes are the same, user is authenticated.
-		if(loggedEmployee.getPassword().equals(EmployeeRepositoryJdbc.getInstance().getPasswordHash(employee))) {
-			return loggedEmployee;
-		}
-		return null;
-	}
 
 	@Override
 	public Employee getEmployeeInformation(Employee employee) {
-		return EmployeeRepositoryJdbc.getInstance().select(employee.getId());
+		return repository.select(employee.getId());
 	}
 
 	@Override

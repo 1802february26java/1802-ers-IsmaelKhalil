@@ -111,7 +111,7 @@ public class EmployeeRepositoryJdbc implements EmployeeRepository {
 		} catch (SQLException e) {
 			logger.warn("Employee retrieval failed due to exception being thrown.", e);
 		}
-		return new Employee();
+		return null;
 	}
 
 	@Override
@@ -139,7 +139,7 @@ public class EmployeeRepositoryJdbc implements EmployeeRepository {
 		} catch (SQLException e) {
 			logger.warn("Employee retrieval failed due to exception being thrown.", e);
 		}
-		return new Employee();
+		return null;
 	}
 
 	@Override
@@ -169,23 +169,23 @@ public class EmployeeRepositoryJdbc implements EmployeeRepository {
 		return employees;
 	}
 
-	@Override
-	public String getPasswordHash(Employee employee) {
-		try(Connection connection = ConnectionUtil.getConnection()) {
-			int statementIndex = 0;
-			String command = "SELECT GET_HASH(?,?) AS HASH FROM DUAL";
-			PreparedStatement statement = connection.prepareStatement(command);
-			statement.setString(++statementIndex, employee.getPassword());
-			ResultSet result = statement.executeQuery();
-
-			if(result.next()) {
-				return result.getString("HASH");
-			}
-		} catch (SQLException e) {
-			logger.warn("Exception getting password hash", e);
-		} 
-		return new String();
-	}
+    @Override
+    public String getPasswordHash(Employee employee) {
+        logger.trace("Getting password hash");
+        try(Connection connection = ConnectionUtil.getConnection()) {
+            int statementIndex = 0;
+            String command = "SELECT GET_HASH(?) AS HASH FROM DUAL";
+            PreparedStatement statement = connection.prepareStatement(command);
+            statement.setString(++statementIndex, employee.getPassword());
+            ResultSet result = statement.executeQuery();
+            if(result.next()) {
+                return result.getString("HASH");
+            }
+        } catch (SQLException e) {
+            logger.warn("Exception getting customer hash", e);
+        } 
+        return new String();
+    }
 
 	@Override
 	public boolean insertEmployeeToken(EmployeeToken employeeToken) {
