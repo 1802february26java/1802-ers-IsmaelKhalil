@@ -28,7 +28,8 @@ public class LoginControllerAlpha implements LoginController {
 		if (employee == null) {
 			return new ClientMessage(FinalUtil.LOGIN_FAIL);
 		} else {
-			request.getSession().setAttribute("employee", employee);
+			request.getSession().setAttribute("loggedEmployee", employee);
+			System.out.println(employee);
 			return employee;
 		}
 	}

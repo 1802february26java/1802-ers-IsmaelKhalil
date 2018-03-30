@@ -133,7 +133,8 @@ public class EmployeeRepositoryJdbc implements EmployeeRepository {
 				employee.setPassword(result.getString("U_PASSWORD"));
 				employee.setEmail(result.getString("U_EMAIL"));
 				employee.setEmployeeRole(new EmployeeRole(result.getInt("UR_ID"), result.getString("UR_TYPE")));
-
+				logger.trace("Selected employee.");
+				System.out.println(employee);
 				return employee;
 			}
 		} catch (SQLException e) {
@@ -179,6 +180,7 @@ public class EmployeeRepositoryJdbc implements EmployeeRepository {
             statement.setString(++statementIndex, employee.getPassword());
             ResultSet result = statement.executeQuery();
             if(result.next()) {
+            	logger.trace("Password Hash acquired");
                 return result.getString("HASH");
             }
         } catch (SQLException e) {

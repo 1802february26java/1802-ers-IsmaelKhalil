@@ -42,12 +42,12 @@ public class EmployeeServiceAlpha implements EmployeeService {
 
 	@Override
 	public Set<Employee> getAllEmployeesInformation() {
-		return EmployeeRepositoryJdbc.getInstance().selectAll();
+		return repository.selectAll();
 	}
 
 	@Override
 	public boolean createEmployee(Employee employee) {
-		return EmployeeRepositoryJdbc.getInstance().insert(employee);
+		return repository.insert(employee);
 	}
 
 	@Override
