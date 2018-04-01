@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import com.revature.controller.EmployeeInformationControllerAlpha;
 import com.revature.controller.ErrorControllerAlpha;
 import com.revature.controller.LoginControllerAlpha;
+import com.revature.controller.ReimbursementControllerAlpha;
 import com.revature.controller.HomeControllerAlpha;
 
 /**
@@ -54,6 +55,10 @@ public class RequestHelper {
 			return new HomeControllerAlpha().showEmployeeHome(request);	
 		case "/ERS/leader-home.do":
 			return new HomeControllerAlpha().showEmployeeHome(request);
+		case "/ERS/reimbursement.do":
+			return ReimbursementControllerAlpha.getInstance().multipleRequests(request);
+		case "/ERS/submit.do":
+			return ReimbursementControllerAlpha.getInstance().submitRequest(request);
 		default:
 			return new ErrorControllerAlpha().showError(request);
 		}

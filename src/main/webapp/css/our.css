@@ -3,7 +3,7 @@ a {
 }
 
 .navbar-default {
-    background-color: black;
+    background-color: #02C24E;
 }
 
 .navbar-default .navbar-brand {
@@ -21,6 +21,10 @@ a {
 
 .btn-list {
     margin-top: 10px;
+}
+
+.navbar-default .navbar-nav>li>a  {
+	color: white;
 }
 
 .form-control {

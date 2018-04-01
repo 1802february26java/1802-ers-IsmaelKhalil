@@ -114,23 +114,4 @@ public class EmployeeInformationControllerAlpha implements EmployeeInformationCo
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-
-	private void sendEmailToEmployee(Employee employee){
-
-		String subject = "New Employee Registration";
-		String body = "Here is your credential to ERS website.\n"+
-				"Username: "+employee.getUsername()+"\n"
-				+"Password: "+employee.getPassword()+"\n"
-				+"Please visit below ERS link to login.\n"
-				+"http://localhost:8085/ERS/";
-		String email = employee.getEmail();
-
-		//	      EmailThread runnableThread = new EmailThread(subject,body,email);
-		//	        
-		//	        Thread t = new Thread(runnableThread);
-		//	        
-		//	        t.start(); 
-	}
-
 }

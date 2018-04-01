@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Submit a Request</title>
+<link rel="icon" href="images/customer.ico" />
+<!-- jQuery library -->
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<!-- Boostrap CSS -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+
+<!-- Boostrap JS -->
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<!-- Our CSS -->
+<link rel="stylesheet" href="css/our.css" />
+</head>
+<body>
+	<nav class="navbar navbar-default">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a href="lackey-home.do" class="navbar-brand"><strong
+					id="username">Home</strong></a>
+			</div>
+			<ul class="nav navbar-nav">
+				<li class="dropdown"><a class="dropdown-toggle"
+					data-toggle="dropdown" role="button" aria-haspopup="true"
+					aria-expanded="false"><strong>Operations</strong><span
+						class="caret"></span></a>
+					<ul class="dropdown-menu">
+						<li><a href="submit.do">Submit a request</a></li>
+						<li><a href="reimbursement.do">View reimbursement</a></li>
+						<li><a href="viewInfo.do">View account info</a></li>
+						<li><a href="updateInfo.do">Update account info</a></li>
+					</ul></li>
+			</ul>
+			<div class="nav navbar-nav navbar-right">
+				<a href="logout.do" class="navbar-brand"><strong><small>Logout</small></strong></a>
+			</div>
+		</div>
+	</nav>
+	<div class="col-md-4 col-md-offset-4">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3>Submit a Reimbursement Request</h3>
+			</div>
+			<div class="text-center">
+				<strong>Amount</strong>
+			</div>
+			<div class="form-group">
+				<input id="amount" name="amount" placeholder="Amount" class="form-control" />
+			</div>
+			<div class="form-group" align="center">
+				<h4>What type of reimbursement?</h4>
+				<select class="form-control" id="reimbursementType" name="reimbursementType">
+					<option>Course</option>
+					<option>Certification</option>
+					<option>Travel</option>
+					<option>Other</option>
+				</select>
+			</div>
+			<div id="createReimbursementMessage"></div>
+			<button id="xubmitButton" class="btn btn-md btn-primary btn-block">Submit</button>
+		</div>
+	</div>
+	<script src="js/submit.js"></script>
+</body>
+</html>
