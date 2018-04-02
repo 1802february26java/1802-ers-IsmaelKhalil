@@ -33,7 +33,7 @@ public class ReimbursementRepositoryJdbc implements ReimbursementRepository {
 
 	@Override
 	public boolean insert(Reimbursement reimbursement) throws IOException {
-
+      logger.trace("The reimbursement information before insert: "+reimbursement);
 
 		try(Connection connection = ConnectionUtil.getConnection()) {
 
@@ -41,7 +41,7 @@ public class ReimbursementRepositoryJdbc implements ReimbursementRepository {
 
 			String sql = "INSERT INTO REIMBURSEMENT(R_ID,R_REQUESTED,R_RESOLVED,"
 					+ "R_AMOUNT,R_DESCRIPTION,R_RECEIPT,EMPLOYEE_ID,MANAGER_ID,RS_ID,RT_ID)"
-					+ " VALUES(NULL,?,NULL,?,?,?,?,?,?,?)";
+					+ " VALUES(NULL,?,NULL,?,?,NULL,?,41,?,?)";
 
 			PreparedStatement statement = connection.prepareStatement(sql);								
 
@@ -49,11 +49,8 @@ public class ReimbursementRepositoryJdbc implements ReimbursementRepository {
 			statement.setDouble(++parameterIndex, reimbursement.getAmount());
 			statement.setString(++parameterIndex, reimbursement.getDescription());
 
-			//Receipt
-			statement.setBinaryStream(++parameterIndex, (InputStream)reimbursement.getReceipt());
-
 			statement.setInt(++parameterIndex, reimbursement.getRequester().getId());
-			statement.setInt(++parameterIndex, reimbursement.getApprover().getId());
+			//statement.setInt(++parameterIndex, reimbursement.getApprover().getId());
 			statement.setInt(++parameterIndex, reimbursement.getStatus().getId());
 			statement.setInt(++parameterIndex, reimbursement.getType().getId());
 
@@ -104,23 +101,11 @@ public class ReimbursementRepositoryJdbc implements ReimbursementRepository {
 
 			int parameterIndex = 0;
 
-			String sql = "SELECT RE.R_ID AS RE_R_ID , RE.R_REQUESTED AS RE_R_REQUESTED,"
-					+ " RE.R_RESOLVED AS RE_R_RESOLVED, RE.R_AMOUNT AS RE_R_AMOUNT,"
-					+ " RE.R_DESCRIPTION AS RE_R_DESCRIPTION, RE.R_RECEIPT AS RE_R_RECEIPT,"
-					+ " RE.EMPLOYEE_ID AS RE_EMPLOYEE_ID, RE.MANAGER_ID AS RE_MANAGER_ID,"
-					+ " RE.RS_ID AS RE_RS_ID, RE.RT_ID AS RE_RT_ID,E1.U_ID AS E1_U_ID,"
-					+ " E1.U_FIRSTNAME AS E1_U_FIRSTNAME, E1.U_LASTNAME AS E1_U_LASTNAME,"
-					+ " E1.U_USERNAME AS E1_U_USERNAME, E1.U_PASSWORD AS E1_U_PASSWORD,"
-					+ " E1.U_EMAIL AS E1_U_EMAIL, E1.UR_ID AS E1_UR_ID, R1.UR_TYPE AS R1_UR_TYPE,"
-					+ "E2.U_ID AS E2_U_ID, E2.U_FIRSTNAME AS E2_U_FIRSTNAME,"
-					+ " E2.U_LASTNAME AS E2_U_LASTNAME, E2.U_USERNAME AS E2_U_USERNAME,"
-					+ " E2.U_PASSWORD AS E2_U_PASSWORD, E2.U_EMAIL AS E2_U_EMAIL,"
-					+ " E2.UR_ID AS E2_UR_ID, R2.UR_TYPE AS R2_UR_TYPE,RS.RS_STATUS AS RS_RS_STATUS,"
-					+ " RT.RT_TYPE AS RT_RT_TYPE FROM REIMBURSEMENT RE,USER_T E1, USER_ROLE R1,"
-					+ " USER_T E2,USER_ROLE R2,REIMBURSEMENT_STATUS RS,REIMBURSEMENT_TYPE RT"
-					+ " WHERE RE.EMPLOYEE_ID = E1.U_ID AND E1.UR_ID = R1.UR_ID AND RE.MANAGER_ID = E2.U_ID"
-					+ " AND E2.UR_ID = R2.UR_ID AND RE.RS_ID = RS.RS_ID AND RE.RT_ID = RT.RT_ID "
-					+ "AND R_ID = ?";
+			String sql = "SELECT RE.R_ID AS RE_R_ID , RE.R_REQUESTED AS RE_R_REQUESTED, RE.R_RESOLVED AS RE_R_RESOLVED, RE.R_AMOUNT AS RE_R_AMOUNT, RE.R_DESCRIPTION AS RE_R_DESCRIPTION, RE.R_RECEIPT AS RE_R_RECEIPT, RE.EMPLOYEE_ID AS RE_EMPLOYEE_ID, RE.MANAGER_ID AS RE_MANAGER_ID,"
+					+ " RE.RS_ID AS RE_RS_ID, RE.RT_ID AS RE_RT_ID,E1.U_ID AS E1_U_ID, E1.U_FIRSTNAME AS E1_U_FIRSTNAME, E1.U_LASTNAME AS E1_U_LASTNAME, E1.U_USERNAME AS E1_U_USERNAME, E1.U_PASSWORD AS E1_U_PASSWORD, E1.U_EMAIL AS E1_U_EMAIL, E1.UR_ID AS E1_UR_ID, R1.UR_TYPE AS R1_UR_TYPE,"
+					+ "E2.U_ID AS E2_U_ID, E2.U_FIRSTNAME AS E2_U_FIRSTNAME, E2.U_LASTNAME AS E2_U_LASTNAME, E2.U_USERNAME AS E2_U_USERNAME, E2.U_PASSWORD AS E2_U_PASSWORD, E2.U_EMAIL AS E2_U_EMAIL,"
+					+ " E2.UR_ID AS E2_UR_ID, R2.UR_TYPE AS R2_UR_TYPE,RS.RS_STATUS AS RS_RS_STATUS, RT.RT_TYPE AS RT_RT_TYPE FROM REIMBURSEMENT RE,USER_T E1, USER_ROLE R1, USER_T E2,USER_ROLE R2,REIMBURSEMENT_STATUS RS,REIMBURSEMENT_TYPE RT"
+					+ " WHERE RE.EMPLOYEE_ID = E1.U_ID AND E1.UR_ID = R1.UR_ID AND RE.MANAGER_ID = E2.U_ID AND E2.UR_ID = R2.UR_ID AND RE.RS_ID = RS.RS_ID AND RE.RT_ID = RT.RT_ID AND R_ID = ?";
 
 			PreparedStatement statement = connection.prepareStatement(sql);
 
@@ -166,24 +151,11 @@ public class ReimbursementRepositoryJdbc implements ReimbursementRepository {
 
 			int parameterIndex = 0;
 
-			String sql = "SELECT RE.R_ID AS RE_R_ID , RE.R_REQUESTED AS RE_R_REQUESTED,"
-					+ " RE.R_RESOLVED AS RE_R_RESOLVED, RE.R_AMOUNT AS RE_R_AMOUNT,"
-					+ " RE.R_DESCRIPTION AS RE_R_DESCRIPTION, RE.R_RECEIPT AS RE_R_RECEIPT,"
-					+ " RE.EMPLOYEE_ID AS RE_EMPLOYEE_ID, RE.MANAGER_ID AS RE_MANAGER_ID,"
-					+ " RE.RS_ID AS RE_RS_ID, RE.RT_ID AS RE_RT_ID,E1.U_ID AS E1_U_ID,"
-					+ " E1.U_FIRSTNAME AS E1_U_FIRSTNAME, E1.U_LASTNAME AS E1_U_LASTNAME,"
-					+ " E1.U_USERNAME AS E1_U_USERNAME, E1.U_PASSWORD AS E1_U_PASSWORD,"
-					+ " E1.U_EMAIL AS E1_U_EMAIL, E1.UR_ID AS E1_UR_ID, R1.UR_TYPE AS R1_UR_TYPE,"
-					+ "E2.U_ID AS E2_U_ID, E2.U_FIRSTNAME AS E2_U_FIRSTNAME,"
-					+ " E2.U_LASTNAME AS E2_U_LASTNAME, E2.U_USERNAME AS E2_U_USERNAME,"
-					+ " E2.U_PASSWORD AS E2_U_PASSWORD, E2.U_EMAIL AS E2_U_EMAIL,"
-					+ " E2.UR_ID AS E2_UR_ID, R2.UR_TYPE AS R2_UR_TYPE,RS.RS_STATUS AS RS_RS_STATUS,"
-					+ " RT.RT_TYPE AS RT_RT_TYPE FROM REIMBURSEMENT RE,USER_T E1, USER_ROLE R1,"
-					+ " USER_T E2,USER_ROLE R2,REIMBURSEMENT_STATUS RS,REIMBURSEMENT_TYPE RT"
-					+ " WHERE RE.EMPLOYEE_ID = E1.U_ID AND E1.UR_ID = R1.UR_ID AND RE.MANAGER_ID = E2.U_ID"
-					+ " AND E2.UR_ID = R2.UR_ID AND RE.RS_ID = RS.RS_ID AND RE.RT_ID = RT.RT_ID "
-					+ "AND RS.RS_STATUS = 'PENDING' "
-					+ "AND RE.EMPLOYEE_ID = ?";
+			String sql = "SELECT RE.R_ID AS RE_R_ID , RE.R_REQUESTED AS RE_R_REQUESTED, RE.R_RESOLVED AS RE_R_RESOLVED, RE.R_AMOUNT AS RE_R_AMOUNT, RE.R_DESCRIPTION AS RE_R_DESCRIPTION, RE.R_RECEIPT AS RE_R_RECEIPT,"
+					+ " RE.EMPLOYEE_ID AS RE_EMPLOYEE_ID, RE.MANAGER_ID AS RE_MANAGER_ID, RE.RS_ID AS RE_RS_ID, RE.RT_ID AS RE_RT_ID,E1.U_ID AS E1_U_ID, E1.U_FIRSTNAME AS E1_U_FIRSTNAME, E1.U_LASTNAME AS E1_U_LASTNAME,"
+					+ " E1.U_USERNAME AS E1_U_USERNAME, E1.U_PASSWORD AS E1_U_PASSWORD, E1.U_EMAIL AS E1_U_EMAIL, E1.UR_ID AS E1_UR_ID, R1.UR_TYPE AS R1_UR_TYPE, E2.U_ID AS E2_U_ID, E2.U_FIRSTNAME AS E2_U_FIRSTNAME,"
+					+ " E2.U_LASTNAME AS E2_U_LASTNAME, E2.U_USERNAME AS E2_U_USERNAME, E2.U_PASSWORD AS E2_U_PASSWORD, E2.U_EMAIL AS E2_U_EMAIL, E2.UR_ID AS E2_UR_ID, R2.UR_TYPE AS R2_UR_TYPE,RS.RS_STATUS AS RS_RS_STATUS,"
+					+ " RT.RT_TYPE AS RT_RT_TYPE FROM REIMBURSEMENT RE,USER_T E1, USER_ROLE R1, USER_T E2,USER_ROLE R2,REIMBURSEMENT_STATUS RS,REIMBURSEMENT_TYPE RT WHERE RE.EMPLOYEE_ID = E1.U_ID AND E1.UR_ID = R1.UR_ID AND RE.MANAGER_ID = E2.U_ID AND E2.UR_ID = R2.UR_ID AND RE.RS_ID = RS.RS_ID AND RE.RT_ID = RT.RT_ID AND RS.RS_STATUS = 'PENDING' AND RE.EMPLOYEE_ID = ?";
 
 			PreparedStatement statement = connection.prepareStatement(sql);
 
@@ -209,11 +181,10 @@ public class ReimbursementRepositoryJdbc implements ReimbursementRepository {
 										result.getString("E2_U_PASSWORD"),result.getString("E2_U_EMAIL"),
 										new EmployeeRole(result.getInt("E2_UR_ID"),result.getString("R2_UR_TYPE"))),
 								new ReimbursementStatus(result.getInt("RE_RS_ID"),result.getString("RS_RS_STATUS")),
-								new ReimbursementType(result.getInt("RE_RT_ID"),result.getString("RT_RT_TYPE")),
-								//ADDING RECEIPT HERE  
-								result.getBinaryStream("RE_R_RECEIPT")
+								new ReimbursementType(result.getInt("RE_RT_ID"),result.getString("RT_RT_TYPE"))
 						));
 			}
+			logger.trace("pending reimbursement list for employee:"+ set);
 			return set;
 		} catch (SQLException e) {
 			logger.error("Error while selecting all pending reimbursement for this particular employeeId.", e);
@@ -273,9 +244,7 @@ public class ReimbursementRepositoryJdbc implements ReimbursementRepository {
 										result.getString("E2_U_PASSWORD"),result.getString("E2_U_EMAIL"),
 										new EmployeeRole(result.getInt("E2_UR_ID"),result.getString("R2_UR_TYPE"))),
 								new ReimbursementStatus(result.getInt("RE_RS_ID"),result.getString("RS_RS_STATUS")),
-								new ReimbursementType(result.getInt("RE_RT_ID"),result.getString("RT_RT_TYPE")),
-								//ADDING RECEIPT HERE  
-								result.getBinaryStream("RE_R_RECEIPT")
+								new ReimbursementType(result.getInt("RE_RT_ID"),result.getString("RT_RT_TYPE"))
 						));
 			}
 			logger.trace(set);
@@ -335,7 +304,8 @@ public class ReimbursementRepositoryJdbc implements ReimbursementRepository {
 								new ReimbursementType(result.getInt("RE_RT_ID"),result.getString("RT_RT_TYPE"))
 						));
 			}
-
+			logger.trace(set);
+			return set;
 		} catch (SQLException e) {
 			logger.error("Unable to select all pending reimbursements.", e);
 		}
@@ -391,6 +361,7 @@ public class ReimbursementRepositoryJdbc implements ReimbursementRepository {
 								new ReimbursementType(result.getInt("RE_RT_ID"),result.getString("RT_RT_TYPE"))
 						));
 			}
+			logger.trace(set);
 			return set;
 		} catch (SQLException e) {
 			logger.error("Unable to select all approved/declined reimbursements.", e);

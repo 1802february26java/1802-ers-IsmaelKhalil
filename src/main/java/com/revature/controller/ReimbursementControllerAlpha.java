@@ -55,12 +55,12 @@ public class ReimbursementControllerAlpha implements ReimbursementController {
 		ReimbursementStatus status = new ReimbursementStatus(1,"PENDING");
 		ReimbursementType type = new ReimbursementType(Integer.parseInt(
 				request.getParameter("reimbursementTypeId")),request.getParameter("reimbursementTypeName"));
-		Employee manager = new Employee(5,"ISMAEL","KHALIL","ismael","1234","test@gmail.com",new EmployeeRole());
+		Employee manager = new Employee(41,"BOW","SER","bowser","1234","bowser",new EmployeeRole(2,"MANAGER"));
 		
 		Reimbursement reimbursement = new Reimbursement(99,LocalDateTime.now(),null,
 				Double.parseDouble(request.getParameter("amount")),request.getParameter("description"),
 				loggedEmployee,manager,status,type);
- 
+       logger.trace("broke here "+reimbursement);
                 
 		if (ReimbursementServiceAlpha.getInstance().submitRequest(reimbursement)) {			
 			return new ClientMessage("A REIMBURSEMENT HAS BEEN CREATED SUCCESSFULLY");
@@ -134,6 +134,7 @@ public class ReimbursementControllerAlpha implements ReimbursementController {
 				return ReimbursementServiceAlpha.getInstance().getAllResolvedRequests();
 			}
 			else if (request.getParameter("fetch").equals("pending")){
+				logger.trace("controller: "+ReimbursementServiceAlpha.getInstance().getAllPendingRequests());
 			return ReimbursementServiceAlpha.getInstance().getAllPendingRequests();
 			}
 		    
@@ -165,13 +166,11 @@ public class ReimbursementControllerAlpha implements ReimbursementController {
 		
         Employee loggedEmployee = (Employee) request.getSession().getAttribute("loggedEmployee");
 		
-		/* If customer is not logged in */
 		if(loggedEmployee == null ) {
 	
 			return "login.html";
 			
 		}
-		//If he/she is a employee not a manager
 		if(loggedEmployee.getEmployeeRole().getId()==1){
 			
 			return "403.html";

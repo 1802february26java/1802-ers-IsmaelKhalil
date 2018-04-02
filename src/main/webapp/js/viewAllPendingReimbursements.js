@@ -12,11 +12,6 @@ window.onload = () =>{
     
     getAllPendingReimbursements();
 
-    var images = document.querySelectorAll('img');
-       for(var i=0, len = images.length; i < len; i++){
-         images[i].addEventListener('click', openModal);
-       }
-
 
 }
 
@@ -30,16 +25,13 @@ function getAllPendingReimbursements(){
 
       xhr.onreadystatechange = () => {
           if(xhr.readyState === XMLHttpRequest.DONE && xhr.status ===200){
-              //Getting JSON from response body
-           //   consol.log(xhr.responseText);
               let data = JSON.parse(xhr.responseText);
                 console.log(data);
  
-              //present the data to the user
               presentAllPendingReimbursements(data);
           }
       };
-        //Doing a HTTP to a specifc endpoint
+        //Doing a HTTP to a specific endpoint
         xhr.open("GET",`multipleRequests.do?fetch=pending`);
  
    //Sending our request
@@ -48,14 +40,10 @@ function getAllPendingReimbursements(){
 
 function presentAllPendingReimbursements(data) {
      
-    //If message is a member of the JSON, something went wrong
       if(data.message){
           document.getElementById("listMessage").innerHTML = '<span class="label label-danger label-center">Something went wrong.</span>';
       }
       else{
-          // we present reimbursements to the user
-          //Get reimbursement lsit node
-       //count how many reimbursements we have
        let counter = 0; 
 
      let reimbursementList = document.getElementById("pendingReimbursementsList");
@@ -71,12 +59,6 @@ function presentAllPendingReimbursements(data) {
          let td4 = document.createElement('td');
          let td5 = document.createElement('td');
          let td6 = document.createElement('td');
-         let tdReceipt = document.createElement('td');
-         let imgReceipt = document.createElement('img');
-         imgReceipt.src = `data:image/png;base64,${reimbursement.receipt}`;
-         imgReceipt.className="img-responsive";
-         imgReceipt.setAttribute("onclick","openModal()");
-         //td7 is reimbursement status
          let td7 = document.createElement('td');
 
          let selectList = document.createElement('select');
@@ -86,7 +68,6 @@ function presentAllPendingReimbursements(data) {
          let option2 = document.createElement('option');
          let option3 = document.createElement('option');
 
-         //td8 is for action button
          let td8 = document.createElement('td');
          let button1 = document.createElement('button'); 
          let button2 = document.createElement('button'); 
@@ -98,7 +79,7 @@ function presentAllPendingReimbursements(data) {
          let text4 = document.createTextNode(`${reimbursement.description}`);
          let text5 = document.createTextNode(`${reimbursement.requester.firstName} ${reimbursement.requester.lastName}`);
          let text6 = document.createTextNode(`${reimbursement.type.type}`);
-         //td 7 text
+         
          let optionText1 = document.createTextNode(`${reimbursement.status.status}`);
          let optionText2 = document.createTextNode(`DECLINED`);
          let optionText3 = document.createTextNode(`APPROVED`); 
@@ -115,16 +96,13 @@ function presentAllPendingReimbursements(data) {
              td5.appendChild(text5);
              td6.appendChild(text6);
 
-             //td7
              option1.appendChild(optionText1);
              option2.appendChild(optionText2);
              option3.appendChild(optionText3);
              selectList.appendChild(option1);
              selectList.appendChild(option2);
              selectList.appendChild(option3);
-             tdReceipt.appendChild(imgReceipt);
              td7.appendChild(selectList);
-             //td8
              button2.appendChild(textButton2);
              td8.appendChild(button2);
 
@@ -134,7 +112,6 @@ function presentAllPendingReimbursements(data) {
              tr.appendChild(td4);
              tr.appendChild(td5);
              tr.appendChild(td6);
-             tr.appendChild(tdReceipt);
              tr.appendChild(td7);
              tr.appendChild(td8);
 
@@ -152,7 +129,7 @@ function finalizedReimbursement(obj){
    let rowData = obj.parentNode.parentNode;
 
  
-   let statusCode =rowData.childNodes[7].childNodes[0].value ;
+   let statusCode =rowData.childNodes[6].childNodes[0].value ;
    let reimbursementId = rowData.childNodes[0].innerHTML;
    
 
@@ -177,7 +154,6 @@ function finalizedReimbursement(obj){
            //Getting JSON from response body
            let data = JSON.parse(xhr.responseText);
            console.log(data);   
-           //Cal login response processing
            updateReimbursement(data);
        }
    };

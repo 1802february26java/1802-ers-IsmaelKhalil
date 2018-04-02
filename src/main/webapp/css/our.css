@@ -19,7 +19,12 @@ a {
 }
 
 .panel panel-default {
-	color: #02C24E;
+	color: white;
+}
+
+
+.panel-default .panel-heading {
+	color: white;
 }
 
 .btn-block {
