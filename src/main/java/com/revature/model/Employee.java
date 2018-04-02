@@ -52,24 +52,18 @@ public class Employee implements Serializable, Comparable<Employee> {
 	private EmployeeRole employeeRole;	
 
 	public Employee() {}
-
-	public Employee(int id, String firstName, String lastName, String username, String password, String email) {
-		this.id = id;
-		this.firstName = firstName;
-		this.lastName = lastName;
+	
+	public Employee(String username){
 		this.username = username;
-		this.password = password;
-		this.email = email;
 	}
-
-	public Employee(String firstName, String lastName, String username, String password, String email,
-			EmployeeRole employeeRole) {
-		this.firstName = firstName;
-		this.lastName = lastName;
+	
+	public Employee(int id){
+		this.id = id;
+	}
+	
+	public Employee(String username, String password){
 		this.username = username;
 		this.password = password;
-		this.email = email;
-		this.employeeRole = employeeRole;
 	}
 
 	public Employee(int id, String firstName, String lastName, String username, String password, String email,
@@ -81,14 +75,6 @@ public class Employee implements Serializable, Comparable<Employee> {
 		this.password = password;
 		this.email = email;
 		this.employeeRole = employeeRole;
-	}
-
-	public Employee(int id) {
-		this.id = id;
-	}
-
-	public Employee(String username){
-		this.username = username;
 	}
 
 	public int getId() {

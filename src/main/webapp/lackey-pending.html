@@ -3,7 +3,7 @@
 <head>
     <title>View pending reimbursements</title>
 
-    <link rel="icon" href="images/customer.ico" />
+    <link rel="icon" href="images/reimburse.ico" />
 
     <!-- jQuery library -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -17,7 +17,7 @@
     <style>
         body {
 			/* background image override */
-			background-image:  url(images/background.jpg);
+			background-image:  url(images/library.jpg);
 			background-size:   cover;
 		
 		}
@@ -28,28 +28,32 @@
 </head>
 
  <body>
-    <nav class="navbar navbar-default">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <a href="lackey-home.do" class="navbar-brand"><strong>Hello, </strong><strong id="username">Home</strong></a>
-            </div>
-            <ul class="nav navbar-nav">
-                <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><strong>Operations</strong><span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="submit.do">Submit a request</a></li>
-                        <li><a href="multipleRequests.do">View pending reimbursement</a></li>
-                        <li><a href="multipleRequests.do?fetch=resolved">View resolved reimbursement</a></li>
-                        <li><a href="viewInfo.do">View account info</a></li>
-                        <li><a href="updateInfo.do">Update account info</a></li>
-                    </ul>
-                </li>
-            </ul>
-            <div class="nav navbar-nav navbar-right">
-                <a href="logout.do" class="navbar-brand"><strong><small>Logout</small></strong></a>
-            </div>
-        </div>
-    </nav>
+	<nav class="navbar navbar-default">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a href="home.do" class="navbar-brand"><strong>Hello, </strong><strong
+					id="loggedUsername">Home</strong></a>
+			</div>
+
+			<ul class="nav navbar-nav">
+				<li class="dropdown"><a class="dropdown-toggle"
+					data-toggle="dropdown" role="button" aria-haspopup="true"
+					aria-expanded="false"><strong id="strong">Options</strong><span
+						class="caret"></span></a>
+					<ul class="dropdown-menu">
+						<li><a href="viewInformation.do">Profile</a></li>
+                        <li><a href="submitRequest.do">Submit a Reimbursement</a></li>
+                        <li><a href="multipleRequests.do">View all pending reimbursements</a></li>
+                        <li><a href="multipleRequests.do?fetch=resolved">View all resolved reimbursements</a></li>
+					</ul>
+				</li>
+			</ul>
+
+			<div class="nav navbar-nav navbar-right">
+				<a href="logout.do" class="navbar-brand"><strong><small>Logout</small></strong></a>
+			</div>
+		</div>
+	</nav>
 
     <div class="col-md-12">
             <div class="panel panel-default">
@@ -61,13 +65,13 @@
                 <table class="table table-bordered table-hover" id="table">
                  <thead>
                      <tr>
-                        <th scope="col" class="col-sm-1">Reimbursement ID</th> 
-                        <th scope="col" class="col-sm-2">Request Date</th>
-                        <th scope="col" class="col-sm-1">Amount($)</th>
+                        <th scope="col" class="col-sm-1">ID</th> 
+                        <th scope="col" class="col-sm-2">Time Stamp</th>
+                        <th scope="col" class="col-sm-1">Amount</th>
                         <th scope="col" class="col-sm-3">Description</th>
-                        <th scope="col" class="col-sm-1">Approver name</th>
-                        <th scope="col" class="col-sm-1">Request type</th>
-                        <th scope="col" class="col-sm-2">Request status</th>
+                        <th scope="col" class="col-sm-1">Approver name</th>k
+                        <th scope="col" class="col-sm-1">Type</th>
+                        <th scope="col" class="col-sm-2">Status</th>
                     </tr>
                  </thead>
                  <tbody id="pendingReimbursementsList" >                               
@@ -75,12 +79,12 @@
                 </table>
 
                 <div id="listMessage"></div>
-                <button id="getPending" class="btn btn-md btn-primary btn-block btn-list">GET</button>
+                <button id="getPendingReimbursements" class="btn btn-md btn-primary btn-block btn-list">GET</button>
                 <div class="panel-footer">
                 </div>
             </div>
         </div>
         
-    <script src="js/lackeyPending.js"></script>
+    <script src="js/viewPendingReimbursements.js"></script>
 </body>
 </html>

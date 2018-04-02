@@ -2,8 +2,11 @@ window.onload = () =>{
 
     document.getElementById("loggedUsername").innerHTML = sessionStorage.getItem("username");
     /** **/
+    //Get event listener
     document.getElementById("getResolvedReimbursements").addEventListener("click", getAllResolvedReimbursements);
+    //Get all resolved reimbursement as soon as the page loads
 
+    //filter
     document.getElementById("filter").addEventListener("keyup",filterTable);
 
     getAllResolvedReimbursements();
@@ -37,12 +40,15 @@ function presentAllResolvedReimbursements(data) {
           document.getElementById("listMessage").innerHTML = '<span class="label label-danger label-center">Something went wrong.</span>';
       }
       else{
-       let counter = 0; 
+          // we present reimbursements to the user
+          //Get reimbursement lsit node
+        //count how many reimbursements we have
+        let counter = 0; 
 
      let reimbursementList = document.getElementById("resolvedReimbursementsList");
          reimbursementList.innerHTML="";
   data.forEach((reimbursement)=>{
-         counter = counter + 1;   
+    counter = counter + 1;            
          let tr = document.createElement('tr');   
 
          let td1 = document.createElement('td');
@@ -59,7 +65,7 @@ function presentAllResolvedReimbursements(data) {
          let text3 = document.createTextNode(`${reimbursement.resolved.year}-${reimbursement.resolved.monthValue}-${reimbursement.resolved.dayOfMonth}, ${reimbursement.resolved.hour}:${reimbursement.resolved.minute}:${reimbursement.resolved.second}`);         
          let text4 = document.createTextNode(`${reimbursement.amount}`);
          let text5 = document.createTextNode(`${reimbursement.description}`);
-         let text6 = document.createTextNode(`${reimbursement.requester.firstName} ${reimbursement.requester.lastName}`);
+         let text6 = document.createTextNode(`${reimbursement.approver.firstName} ${reimbursement.approver.lastName}`);
          let text7 = document.createTextNode(`${reimbursement.type.type}`);
          let text8 = document.createTextNode(`${reimbursement.status.status}`);
 

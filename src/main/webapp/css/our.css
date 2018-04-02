@@ -14,17 +14,23 @@ a {
     color: #d2d2d2;
 }
 
+.navbar-default .navbar-nav>li>a  {
+	color: white;
+}
+
+.panel panel-default {
+	color: #02C24E;
+}
+
 .btn-block {
+    background-color: #02C24E;
     width: 50%;
     margin: auto auto 10px;
 }
 
-.btn-list {
-    margin-top: 10px;
-}
-
-.navbar-default .navbar-nav>li>a  {
-	color: white;
+.btn-list{
+    background-color: #02C24E;
+    margin-top:10px;
 }
 
 .form-control {
@@ -32,17 +38,25 @@ a {
     margin: 10px auto 10px auto;
     text-align: center;
 }
+.input-group{
+    text-align: center; 
+}
 
-.panel-default .panel-heading {
+.panel-default .panel-heading{
     text-align: center;
 }
 
-.label-center {
+.label-center{
     display: block;
     width: 50%;
     margin: auto auto 10px;
 }
 
-.list-group-item {
+.list-group-item{
     text-align: center;
 }
+
+h2,h5{
+    text-align: center;
+}
+

@@ -1,48 +1,61 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Manager Home</title>
-    <link rel="icon" href="images/customer.ico" />
-    <!-- jQuery library -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-       
-    <!-- Boostrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
-    
-    <!-- Boostrap JS -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <!-- Our CSS -->
-    <link rel="stylesheet" href="css/our.css" />
+<title>Manager Home Page</title>
+
+<link rel="icon" href="images/expense.ico" />
+
+<!-- jQuery library -->
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<!-- Boostrap CSS -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+
+<!-- Boostrap JS -->
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<style>
+body {
+	/* background image override */
+	background-image: url(images/boardroom.jpg);
+	background-size: cover;
+}
+</style>
+<!-- Our CSS -->
+<link rel="stylesheet" href="css/our.css" />
 </head>
-    <style>
-        body {
-			background-image: url(images/boardroom.jpg);
-			background-size: cover;
-		
-		}
-    </style>
+
 <body>
-    <nav class="navbar navbar-default">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <a href="leader-home.do" class="navbar-brand"><strong>Hello, </strong><strong id="username">Home</strong></a>s
-            </div>
-            <ul class="nav navbar-nav">
-                <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><strong>Operations</strong><span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="viewEmployeeList.do">View all employee info</a></li>
-                      	<li><a href="multipleRequests.do">View all pending reimbursements</a></li>
-                        <li><a href="multipleRequests.do?fetch=resolved">View all resolved reimbursements</a></li>
-                        <li><a href="viewInfo.do">View account info</a></li>
-                    </ul>
-                </li>
-            </ul>
-            <div class="nav navbar-nav navbar-right">
-                <a href="logout.do" class="navbar-brand"><strong>Logout</strong></a>
-            </div>
-        </div>
-    </nav>
-    <script src="js/home.js"></script>
+	<nav class="navbar navbar-default">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a href="home.do" class="navbar-brand"><strong>Hello, </strong><strong
+					id="loggedUsername">Home</strong></a>
+			</div>
+
+			<ul class="nav navbar-nav">
+				<li class="dropdown"><a class="dropdown-toggle"
+					data-toggle="dropdown" role="button" aria-haspopup="true"
+					aria-expanded="false"><strong id="strong">Options</strong><span
+						class="caret"></span></a>
+					<ul class="dropdown-menu">
+						<li><a href="viewInformation.do">Profile</a></li>
+						<li><a href="viewAllEmployees.do">View Employees</a></li>
+						<li><a href="multipleRequests.do">View all pending reimbursements</a></li>
+						<li><a href="multipleRequests.do?fetch=resolved">View all resolved reimbursements</a></li>
+					</ul>
+				</li>
+			</ul>
+
+			<div class="nav navbar-nav navbar-right">
+				<a href="logout.do" class="navbar-brand"><strong><small>Logout</small></strong></a>
+			</div>
+		</div>
+	</nav>
+
+	<script src="js/home.js"></script>
 </body>
 </html>

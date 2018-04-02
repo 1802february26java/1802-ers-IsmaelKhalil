@@ -1,6 +1,6 @@
 window.onload = () =>{
 
-    document.getElementById("username").innerHTML = sessionStorage.getItem("username");
+    document.getElementById("loggedUsername").innerHTML = sessionStorage.getItem("username");
     /** **/
     //Get event listener
     document.getElementById("getSelectedReimbursements").addEventListener("click", getSelectedReimbursements);
@@ -17,15 +17,19 @@ function getSelectedReimbursements(){
       let xhr = new XMLHttpRequest();
 
       xhr.onreadystatechange = () => {
-          if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200){
+          if(xhr.readyState === XMLHttpRequest.DONE && xhr.status ===200){
+              //Getting JSON from response body
+           //   consol.log(xhr.responseText);
               let data = JSON.parse(xhr.responseText);
                 console.log(data);
  
+              //present the data to the user
               presentSelectedReimbursements(data);
           }
       };
       let selectedEmployeeId = sessionStorage.getItem("selectedEmployeeId");
          console.log(selectedEmployeeId);
+        //Doing a HTTP to a specifc endpoint
         xhr.open("GET",`multipleRequests.do?fetch=viewSelectedList&selectedEmployeeId=${selectedEmployeeId}`);
  
    //Sending our request
@@ -34,11 +38,15 @@ function getSelectedReimbursements(){
 
 function presentSelectedReimbursements(data) {
      
+    //If message is a member of the JSON, something went wrong
       if(data.message){
           document.getElementById("listMessage").innerHTML = '<span class="label label-danger label-center">Something went wrong.</span>';
       }
       else{
-
+          // we present reimbursements to the user
+          //Get reimbursement lsit node
+      
+//count how many reimbursements we have
       let counter = 0; 
      let reimbursementList = document.getElementById("selectedReimbursementsList");
          reimbursementList.innerHTML="";
@@ -97,10 +105,12 @@ function presentSelectedReimbursements(data) {
 
 function filterTable(){
 
+    // Get variables 
   let filter = document.getElementById("filter").value.toUpperCase();
   let table = document.getElementById("selectedReimbursementsList");
   let tr = table.getElementsByTagName("tr");
   let i, j;
+  // Loop through all rows, hide those do not fit
   for (i = 0; i < tr.length; i++) {
 
     loop:  for(j = 0;j<8;j++){

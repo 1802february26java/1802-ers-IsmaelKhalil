@@ -1,5 +1,6 @@
 package com.revature.service;
 
+import java.io.IOException;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
@@ -20,45 +21,59 @@ public class ReimbursementServiceAlpha implements ReimbursementService {
 	public static ReimbursementService getInstance() {
 		return reimbursementService;
 	}
-	//test
 	@Override
-	public boolean submitRequest(Reimbursement reimbursement) {
+	public boolean submitRequest(Reimbursement reimbursement) throws IOException {
 		return ReimbursementRepositoryJdbc.getInstance().insert(reimbursement);
+		
 	}
 
 	@Override
 	public boolean finalizeRequest(Reimbursement reimbursement) {
-		return ReimbursementRepositoryJdbc.getInstance().update(reimbursement);
+
+        return ReimbursementRepositoryJdbc.getInstance().update(reimbursement);
+		
 	}
 
 	@Override
-	public Reimbursement getSingleRequest(Reimbursement reimbursement) {
+	public Reimbursement getSingleRequest(Reimbursement reimbursement) throws IOException {
+		
 		return ReimbursementRepositoryJdbc.getInstance().select(reimbursement.getId());
+		
 	}
 
 	@Override
 	public Set<Reimbursement> getUserPendingRequests(Employee employee) {
-		return ReimbursementRepositoryJdbc.getInstance().selectPending(employee.getId());
+
+        return ReimbursementRepositoryJdbc.getInstance().selectPending(employee.getId());
+        
 	}
 
 	@Override
 	public Set<Reimbursement> getUserFinalizedRequests(Employee employee) {
+		
 		return ReimbursementRepositoryJdbc.getInstance().selectFinalized(employee.getId());
+		
 	}
 
 	@Override
 	public Set<Reimbursement> getAllPendingRequests() {
+		
 		return ReimbursementRepositoryJdbc.getInstance().selectAllPending();
+		
 	}
 
 	@Override
 	public Set<Reimbursement> getAllResolvedRequests() {
+		
 		return ReimbursementRepositoryJdbc.getInstance().selectAllFinalized();
+		
 	}
 
 	@Override
 	public Set<ReimbursementType> getReimbursementTypes() {
+		
 		return ReimbursementRepositoryJdbc.getInstance().selectTypes();
+		
 	}
 
 }

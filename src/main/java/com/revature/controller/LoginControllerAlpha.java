@@ -2,38 +2,48 @@ package com.revature.controller;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
 import com.revature.ajax.ClientMessage;
 import com.revature.model.Employee;
 import com.revature.service.EmployeeServiceAlpha;
-import com.revature.util.ConnectionUtil;
 import com.revature.util.FinalUtil;
 
-public class LoginControllerAlpha implements LoginController {
-	//logger
-		private static Logger logger = Logger.getLogger(ConnectionUtil.class);
 
+public class LoginControllerAlpha implements LoginController {
+    
+	private static Logger logger = Logger.getLogger(LoginControllerAlpha.class);
+	
+    private static LoginController loginController = new LoginControllerAlpha();
+	
+	private LoginControllerAlpha() {}
+	
+	public static LoginController getInstance() {
+		return loginController;
+	}
+	
 	@Override
 	public Object login(HttpServletRequest request) {
-		logger.trace("Logging in");
-		if (request.getMethod().equals("GET")) {
+		if(request.getMethod().equals("GET")) {
 			return "login.html";
 		}
-		Employee employee = new Employee();
-		employee.setUsername(request.getParameter("username"));
-		employee.setPassword(request.getParameter("password"));
-		employee = EmployeeServiceAlpha.getInstance().authenticate(employee);
-		if (employee == null) {
+
+		Employee loggedEmployee = EmployeeServiceAlpha.getInstance().authenticate(
+					new Employee(request.getParameter(FinalUtil.EMPLOYEE_USERNAME),
+								 request.getParameter(FinalUtil.EMPLOYEE_PASSWORD))
+				);
+
+		if(loggedEmployee.getId() == 0) {
 			return new ClientMessage(FinalUtil.LOGIN_FAIL);
-		} else {
-			request.getSession().setAttribute("loggedEmployee", employee);
-			System.out.println(employee);
-			return employee;
 		}
+		
+		request.getSession().setAttribute("loggedEmployee", loggedEmployee);
+		
+		return loggedEmployee;
+		
 	}
 
+	
 	@Override
 	public String logout(HttpServletRequest request) {
 		

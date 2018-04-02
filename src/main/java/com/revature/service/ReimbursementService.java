@@ -1,5 +1,6 @@
 package com.revature.service;
 
+import java.io.IOException;
 import java.util.Set;
 
 import com.revature.model.Employee;
@@ -23,8 +24,9 @@ public interface ReimbursementService {
 	 * Input validation can be provided here.
 	 * 
 	 * It returns true if the reimbursement was stored successfully.
+	 * @throws IOException 
 	 */
-	public boolean submitRequest(Reimbursement reimbursement);
+	public boolean submitRequest(Reimbursement reimbursement) throws IOException;
 	
 	/**
 	 * Updates a reimbursement request status in the database.
@@ -40,8 +42,10 @@ public interface ReimbursementService {
 	 * Returns a single reimbursement request information.
 	 * 
 	 * The parameter should at least contain the reimbursement id.
+	 * @throws IOException 
+	 * 
 	 */
-	public Reimbursement getSingleRequest(Reimbursement reimbursement);
+	public Reimbursement getSingleRequest(Reimbursement reimbursement) throws IOException;
 	
 	/**
 	 * Returns a set of PENDING requests of a specific employee.

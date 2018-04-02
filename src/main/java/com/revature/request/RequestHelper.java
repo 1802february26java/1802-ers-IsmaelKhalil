@@ -1,12 +1,15 @@
 package com.revature.request;
 
+import java.io.IOException;
+
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 
 import com.revature.controller.EmployeeInformationControllerAlpha;
 import com.revature.controller.ErrorControllerAlpha;
+import com.revature.controller.HomeControllerAlpha;
 import com.revature.controller.LoginControllerAlpha;
 import com.revature.controller.ReimbursementControllerAlpha;
-import com.revature.controller.HomeControllerAlpha;
 
 /**
  * The RequestHelper class is consulted by the MasterServlet and provides
@@ -41,36 +44,51 @@ public class RequestHelper {
 	 * 		  The request object which contains the solicited URI.
 	 * @return A String containing the URI where the user should be
 	 * forwarded, or data (any object) for AJAX requests.
+	 * @throws ServletException 
+	 * @throws IOException 
 	 */
-	public Object process(HttpServletRequest request) {
+	public Object process(HttpServletRequest request) throws IOException, ServletException {
 		switch(request.getRequestURI())
 		{
 		case "/ERS/login.do":
-			return new LoginControllerAlpha().login(request);		
-		case "/ERS/register.do":
-			return EmployeeInformationControllerAlpha.getInstance().registerEmployee(request);	
-		case "/ERS/lackey-home.do":
-			return new HomeControllerAlpha().showEmployeeHome(request);	
-		case "/ERS/leader-home.do":
-			return new HomeControllerAlpha().showEmployeeHome(request);
-		case "/ERS/submit.do":
-			return ReimbursementControllerAlpha.getInstance().submitRequest(request);
-	    case "/ERS/pending.do":
-			return ReimbursementControllerAlpha.getInstance().multipleRequests(request);
-	    case "/ERS/viewInfo.do":
-		return EmployeeInformationControllerAlpha.getInstance().viewEmployeeInformation(request);
-	    case "/ERS/updateInfo.do":
-		return EmployeeInformationControllerAlpha.getInstance().updateEmployee(request);
-		case "/ERS/viewEmployeeList.do":
-			return EmployeeInformationControllerAlpha.getInstance().viewAllEmployees(request);
-	    case "/ERS/listEmployees.do":
-		return EmployeeInformationControllerAlpha.getInstance().viewAllEmployees(request);		
+			return LoginControllerAlpha.getInstance().login(request);
+			
 		case "/ERS/logout.do":
-			return new LoginControllerAlpha().logout(request);	
+			return LoginControllerAlpha.getInstance().logout(request);
 			
+		case "/ERS/register.do":
+			return EmployeeInformationControllerAlpha.getInstance().registerEmployee(request);
+		
+		case "/ERS/updateInformation.do":
+			return EmployeeInformationControllerAlpha.getInstance().updateEmployee(request);
+		
+		case "/ERS/viewInformation.do":
+			return EmployeeInformationControllerAlpha.getInstance().viewEmployeeInformation(request);
+		
+		case "/ERS/viewAllEmployees.do":
+			return EmployeeInformationControllerAlpha.getInstance().viewAllEmployees(request);
+		
+		case "/ERS/isUserExisted.do":
+			return EmployeeInformationControllerAlpha.getInstance().usernameExists(request);
+		
+		case "/ERS/home.do":
+			return HomeControllerAlpha.getInstance().showEmployeeHome(request);
+		
+		case "/ERS/submitRequest.do":
+			return ReimbursementControllerAlpha.getInstance().submitRequest(request);
+		
+		case "/ERS/singleRequest.do":
+			return ReimbursementControllerAlpha.getInstance().singleRequest(request);
+		
+		case "/ERS/multipleRequests.do":
+			return ReimbursementControllerAlpha.getInstance().multipleRequests(request);
 			
+		case "/ERS/finalizeRequest.do":
+			return ReimbursementControllerAlpha.getInstance().finalizeRequest(request);
 			
-			
+		case "/ERS/getRequestTypes.do":
+			return ReimbursementControllerAlpha.getInstance().getRequestTypes(request);			
+				
 		default:
 			return new ErrorControllerAlpha().showError(request);
 		}

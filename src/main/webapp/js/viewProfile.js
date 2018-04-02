@@ -1,6 +1,6 @@
 window.onload = () =>{
 
-    document.getElementById("username").innerHTML = sessionStorage.getItem("username");
+    document.getElementById("loggedUsername").innerHTML = sessionStorage.getItem("username");
     /** **/
     //Get event listener
     document.getElementById("editProfile").addEventListener("click", editProfile);
@@ -15,22 +15,27 @@ window.onload = () =>{
        let firstName = document.getElementById("editable1").innerHTML;
        let lastName =   document.getElementById("editable2").innerHTML;
        let email = document.getElementById("editable3").innerHTML;
+        //save it through http
         let xhrSave = new XMLHttpRequest();
           xhrSave.onreadystatechange = () => {
-              if(xhrSave.readyState === XMLHttpRequest.DONE && xhrSave.status === 200){
+              if(xhrSave.readyState === XMLHttpRequest.DONE && xhrSave.status ===200){
     
                   let dataToSave = JSON.parse(xhrSave.responseText);
                   saveToDatabase(dataToSave);
               }
           };
+            //Doing a HTTP to a specifc endpoint
             xhrSave.open("POST",`updateInformation.do?firstName=${firstName}&lastName=${lastName}&email=${email}`);
      
+       //Sending our request
        xhrSave.send();
     });
+    //Get profile as soon as the page loads
     getProfile();
 }
 
 function getProfile(){
+      //AJAX Logic
       let xhr = new XMLHttpRequest();
 
       xhr.onreadystatechange = () => {
@@ -39,11 +44,12 @@ function getProfile(){
               let data = JSON.parse(xhr.responseText);
  
 
+              //present the data to the user
               presentProfile(data);
           }
       };
         //Doing a HTTP to a specifc endpoint
-        xhr.open("GET",`viewInfo.do?fetch=profile`);
+        xhr.open("GET",`viewInformation.do?fetch=profile`);
  
    //Sending our request
    xhr.send();
@@ -56,9 +62,9 @@ function editProfile(){
 }
 
 function saveToDatabase(dataToSave){
-    if(dataToSave.message === "INFORMATION SUCCESSFULLY UPDATED"){
+    if(dataToSave.message === "UPDATE EMPLOYEE INFORMATION SUCCESSFUL"){
         document.getElementById("saveMessage").innerHTML = '<span class="label label-success label-center">Save successful.</span>';
-        setTimeout(() =>{ window.location.replace("viewInfo.do");}, 2000);
+        setTimeout(() =>{ window.location.replace("viewInformation.do");}, 2000);
       }
       else{
         document.getElementById("saveMessage").innerHTML = '<span class="label label-danger label-center">Something went wrong.</span>';        
@@ -72,9 +78,11 @@ function presentProfile(data) {
           document.getElementById("saveMessage").innerHTML = '<span class="label label-danger label-center">Something went wrong.</span>';
       }
       else{
+          // we present reimbursements to the user
+          //Get reimbursement lsit node
       
 
-     let profile = document.getElementById("viewInfo");
+     let profile = document.getElementById("viewProfile");
          profile.innerHTML="";
            
          let tr = document.createElement('tr');   

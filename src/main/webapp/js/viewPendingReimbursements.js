@@ -1,9 +1,12 @@
 window.onload = () =>{
 
-    document.getElementById("username").innerHTML = sessionStorage.getItem("username");
+    document.getElementById("loggedUsername").innerHTML = sessionStorage.getItem("username");
     /** **/
-    document.getElementById("getPending").addEventListener("click", getAllPendingReimbursements);
+    //Get event listener
+    document.getElementById("getPendingReimbursements").addEventListener("click", getAllPendingReimbursements);
+    //Get all pending reimbursement as soon as the page loads
 
+    //filter
     document.getElementById("filter").addEventListener("keyup",filterTable);
 
     getAllPendingReimbursements();
@@ -15,14 +18,17 @@ function getAllPendingReimbursements(){
       let xhr = new XMLHttpRequest();
 
       xhr.onreadystatechange = () => {
-          if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200){
-
+          if(xhr.readyState === XMLHttpRequest.DONE && xhr.status ===200){
+              //Getting JSON from response body
+           //   consol.log(xhr.responseText);
               let data = JSON.parse(xhr.responseText);
                 console.log(data);
  
+              //present the data to the user
               presentAllPendingReimbursements(data);
           }
       };
+        //Doing a HTTP to a specifc endpoint
         xhr.open("GET",`multipleRequests.do?fetch=pending`);
  
    //Sending our request
@@ -31,15 +37,20 @@ function getAllPendingReimbursements(){
 
 function presentAllPendingReimbursements(data) {
      
+    //If message is a member of the JSON, something went wrong
       if(data.message){
           document.getElementById("listMessage").innerHTML = '<span class="label label-danger label-center">Something went wrong.</span>';
       }
       else{
+          // we present reimbursements to the user
+          //Get reimbursement lsit node
+
+          //count how many reimbursements we have
         let counter = 0;      
 
      let reimbursementList = document.getElementById("pendingReimbursementsList");
-         reimbursementList.innerHTML = "";
-  data.forEach((reimbursement) => {
+         reimbursementList.innerHTML="";
+  data.forEach((reimbursement)=>{
          counter = counter + 1;  
          let tr = document.createElement('tr');   
 

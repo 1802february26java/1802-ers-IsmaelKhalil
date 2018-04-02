@@ -1,5 +1,8 @@
 package com.revature.controller;
 
+import java.io.IOException;
+
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -21,15 +24,18 @@ public interface ReimbursementController {
 	 * 
 	 * It should return a message stating whether the reimbursement request
 	 * was successfully created or not.
+	 * @throws IOException 
+	 * @throws ServletException 
 	 */
-	public Object submitRequest(HttpServletRequest request);
+	public Object submitRequest(HttpServletRequest request) throws IOException, ServletException;
 	
 	/**
 	 * Returns a single reimbursement request specified by the user.
 	 * 
 	 * This operation can be performed by regular and/or manager employees.
+	 * @throws IOException 
 	 */
-	public Object singleRequest(HttpServletRequest request);
+	public Object singleRequest(HttpServletRequest request) throws IOException;
 	
 	/**
 	 * Returns a collection of reimbursement requests.
@@ -45,8 +51,9 @@ public interface ReimbursementController {
 	 * 
 	 * It should return a message stating that the reimbursement request
 	 * was successfully updated or not.
+	 * @throws IOException 
 	 */
-	public Object finalizeRequest(HttpServletRequest request);
+	public Object finalizeRequest(HttpServletRequest request) throws IOException;
 	
 	/**
 	 * Returns a collection of reimbursement types thats is displayed

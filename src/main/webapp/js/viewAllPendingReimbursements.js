@@ -1,6 +1,6 @@
 window.onload = () =>{
 
-    document.getElementById("username").innerHTML = sessionStorage.getItem("username");
+    document.getElementById("loggedUsername").innerHTML = sessionStorage.getItem("username");
     /** **/
     //Get event listener
     document.getElementById("getPendingReimbursements").addEventListener("click", getAllPendingReimbursements);
@@ -29,7 +29,7 @@ function getAllPendingReimbursements(){
       let xhr = new XMLHttpRequest();
 
       xhr.onreadystatechange = () => {
-          if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200){
+          if(xhr.readyState === XMLHttpRequest.DONE && xhr.status ===200){
               //Getting JSON from response body
            //   consol.log(xhr.responseText);
               let data = JSON.parse(xhr.responseText);

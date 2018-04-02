@@ -3,7 +3,7 @@
 <head>
     <title>View profile</title>
 
-    <link rel="icon" href="images/customer.ico" />
+    <link rel="icon" href="images/reimburse.ico" />
 
     <!-- jQuery library -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -17,7 +17,7 @@
     <style>
         body {
 			/* background image override */
-			background-image:  url(images/background.jpg);
+			background-image:  url(images/library.jpg);
 			background-size:   cover;
 		
 		}
@@ -28,28 +28,32 @@
 </head>
 
  <body>
-    <nav class="navbar navbar-default">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <a href="lackey-home.do" class="navbar-brand"><strong>Hello, </strong><strong id="username">Home</strong></a>
-            </div>
-            <ul class="nav navbar-nav">
-                <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><strong>Operations</strong><span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="submit.do">Submit a request</a></li>
-                        <li><a href="multipleRequests.do">View pending reimbursement</a></li>
-                        <li><a href="multipleRequests.do?fetch=resolved">View resolved reimbursement</a></li>
-                        <li><a href="viewInfo.do">View account info</a></li>
-                        <li><a href="updateInfo.do">Update account info</a></li>
-                    </ul>
-                </li>
-            </ul>
-            <div class="nav navbar-nav navbar-right">
-                <a href="logout.do" class="navbar-brand"><strong><small>Logout</small></strong></a>
-            </div>
-        </div>
-    </nav>
+	<nav class="navbar navbar-default">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a href="home.do" class="navbar-brand"><strong>Hello, </strong><strong
+					id="loggedUsername">Home</strong></a>
+			</div>
+
+			<ul class="nav navbar-nav">
+				<li class="dropdown"><a class="dropdown-toggle"
+					data-toggle="dropdown" role="button" aria-haspopup="true"
+					aria-expanded="false"><strong id="strong">Options</strong><span
+						class="caret"></span></a>
+					<ul class="dropdown-menu">
+						<li><a href="viewInformation.do">Profile</a></li>
+                        <li><a href="submitRequest.do">Submit a Reimbursement</a></li>
+                        <li><a href="multipleRequests.do">View all pending reimbursements</a></li>
+                        <li><a href="multipleRequests.do?fetch=resolved">View all resolved reimbursements</a></li>
+					</ul>
+				</li>
+			</ul>
+
+			<div class="nav navbar-nav navbar-right">
+				<a href="logout.do" class="navbar-brand"><strong><small>Logout</small></strong></a>
+			</div>
+		</div>
+	</nav>
 
     <div class="col-md-10 col-md-offset-1">
             <div class="panel panel-default">
@@ -78,6 +82,6 @@
             </div>
         </div>
 
-    <script src="js/viewInfo.js"></script>
+    <script src="js/viewProfile.js"></script>
 </body>
 </html>

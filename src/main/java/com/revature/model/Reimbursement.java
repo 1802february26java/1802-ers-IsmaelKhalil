@@ -75,11 +75,12 @@ public class Reimbursement implements Serializable, Comparable<Reimbursement> {
 
 	public Reimbursement() {}
 	
-	/**
-	 * It doesn't contain the receipt as a parameter.
-	 */
+	public Reimbursement(int id){
+		this.id = id;
+	}
+	
 	public Reimbursement(int id, LocalDateTime requested, LocalDateTime resolved, double amount, String description,
-			Employee requester, Employee approver, ReimbursementStatus status, ReimbursementType type) {
+		 Employee requester, Employee approver, ReimbursementStatus status, ReimbursementType type, Object receipt) {
 		this.id = id;
 		this.requested = requested;
 		this.resolved = resolved;
@@ -89,7 +90,21 @@ public class Reimbursement implements Serializable, Comparable<Reimbursement> {
 		this.approver = approver;
 		this.status = status;
 		this.type = type;
+		this.receipt = receipt;
 	}
+	
+	public Reimbursement(int id, LocalDateTime requested, LocalDateTime resolved, double amount, String description,
+			 Employee requester, Employee approver, ReimbursementStatus status, ReimbursementType type) {
+			this.id = id;
+			this.requested = requested;
+			this.resolved = resolved;
+			this.amount = amount;
+			this.description = description;
+			this.requester = requester;
+			this.approver = approver;
+			this.status = status;
+			this.type = type;
+		}
 
 	public int getId() {
 		return id;
