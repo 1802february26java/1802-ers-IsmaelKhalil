@@ -83,6 +83,14 @@ public class Employee implements Serializable, Comparable<Employee> {
 		this.employeeRole = employeeRole;
 	}
 
+	public Employee(int id) {
+		this.id = id;
+	}
+
+	public Employee(String username){
+		this.username = username;
+	}
+
 	public int getId() {
 		return id;
 	}

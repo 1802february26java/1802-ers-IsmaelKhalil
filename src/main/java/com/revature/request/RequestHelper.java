@@ -46,19 +46,31 @@ public class RequestHelper {
 		switch(request.getRequestURI())
 		{
 		case "/ERS/login.do":
-			return new LoginControllerAlpha().login(request);			
-		case "/ERS/logout.do":
-			return new LoginControllerAlpha().logout(request);		
+			return new LoginControllerAlpha().login(request);		
 		case "/ERS/register.do":
 			return EmployeeInformationControllerAlpha.getInstance().registerEmployee(request);	
 		case "/ERS/lackey-home.do":
 			return new HomeControllerAlpha().showEmployeeHome(request);	
 		case "/ERS/leader-home.do":
 			return new HomeControllerAlpha().showEmployeeHome(request);
-		case "/ERS/reimbursement.do":
-			return ReimbursementControllerAlpha.getInstance().multipleRequests(request);
 		case "/ERS/submit.do":
 			return ReimbursementControllerAlpha.getInstance().submitRequest(request);
+	    case "/ERS/pending.do":
+			return ReimbursementControllerAlpha.getInstance().multipleRequests(request);
+	    case "/ERS/viewInfo.do":
+		return EmployeeInformationControllerAlpha.getInstance().viewEmployeeInformation(request);
+	    case "/ERS/updateInfo.do":
+		return EmployeeInformationControllerAlpha.getInstance().updateEmployee(request);
+		case "/ERS/viewEmployeeList.do":
+			return EmployeeInformationControllerAlpha.getInstance().viewAllEmployees(request);
+	    case "/ERS/listEmployees.do":
+		return EmployeeInformationControllerAlpha.getInstance().viewAllEmployees(request);		
+		case "/ERS/logout.do":
+			return new LoginControllerAlpha().logout(request);	
+			
+			
+			
+			
 		default:
 			return new ErrorControllerAlpha().showError(request);
 		}

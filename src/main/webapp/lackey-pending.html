@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Employee Home</title>
+    <title>View pending reimbursements</title>
+
     <link rel="icon" href="images/customer.ico" />
+
     <!-- jQuery library -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
        
@@ -11,17 +13,21 @@
     
     <!-- Boostrap JS -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
     <style>
         body {
-			background-image: url(images/library.jpg);
-			background-size: cover;
+			/* background image override */
+			background-image:  url(images/background.jpg);
+			background-size:   cover;
 		
 		}
     </style>
     <!-- Our CSS -->
     <link rel="stylesheet" href="css/our.css" />
+
 </head>
-<body>
+
+ <body>
     <nav class="navbar navbar-default">
         <div class="container-fluid">
             <div class="navbar-header">
@@ -44,6 +50,37 @@
             </div>
         </div>
     </nav>
-    <script src="js/home.js"></script>
+
+    <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3>Pending reimbursements</h3> 
+                    <h3> Total: <span id="counter"></span></h3>
+                    <input type="text" id="filter" class="form-control" placeholder="Search...">
+                </div>        
+                <table class="table table-bordered table-hover" id="table">
+                 <thead>
+                     <tr>
+                        <th scope="col" class="col-sm-1">Reimbursement ID</th> 
+                        <th scope="col" class="col-sm-2">Request Date</th>
+                        <th scope="col" class="col-sm-1">Amount($)</th>
+                        <th scope="col" class="col-sm-3">Description</th>
+                        <th scope="col" class="col-sm-1">Approver name</th>
+                        <th scope="col" class="col-sm-1">Request type</th>
+                        <th scope="col" class="col-sm-2">Request status</th>
+                    </tr>
+                 </thead>
+                 <tbody id="pendingReimbursementsList" >                               
+                  </tbody> 
+                </table>
+
+                <div id="listMessage"></div>
+                <button id="getPending" class="btn btn-md btn-primary btn-block btn-list">GET</button>
+                <div class="panel-footer">
+                </div>
+            </div>
+        </div>
+        
+    <script src="js/lackeyPending.js"></script>
 </body>
 </html>

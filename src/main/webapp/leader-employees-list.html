@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Manager Home</title>
+    <title>List Employees</title>
+
     <link rel="icon" href="images/customer.ico" />
+
     <!-- jQuery library -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
        
@@ -11,18 +13,21 @@
     
     <!-- Boostrap JS -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <!-- Our CSS -->
-    <link rel="stylesheet" href="css/our.css" />
-</head>
+
     <style>
         body {
-			background-image: url(images/boardroom.jpg);
-			background-size: cover;
+			/* background image override */
+			background-image:  url(images/boardroom.jpg);
+			background-size:   cover;
 		
 		}
     </style>
-<body>
-    <nav class="navbar navbar-default">
+    <!-- Our CSS -->
+    <link rel="stylesheet" href="css/our.css" />
+</head>
+
+ <body>
+        <nav class="navbar navbar-default">
         <div class="container-fluid">
             <div class="navbar-header">
                 <a href="leader-home.do" class="navbar-brand"><strong>Hello, </strong><strong id="username">Home</strong></a>s
@@ -43,6 +48,39 @@
             </div>
         </div>
     </nav>
-    <script src="js/home.js"></script>
+    
+      <div class="col-md-10 col-md-offset-1">
+        <div class="panel panel-default">
+            
+            <div class="panel-heading">
+                <h3>Employees</h3>
+                <h3> Total: <span id="counter"></span></h3>
+                <input type="text" id="filter" class="form-control" placeholder="Search...">
+            </div>
+
+            <table class="table table-bordered table-hover">                  
+                <thead>
+                    <tr>
+                       <th scope="col" class="col-sm-2">Employee ID</th>
+                       <th scope="col" class="col-sm-2">First Name</th>
+                       <th scope="col" class="col-sm-2">Last Name</th>
+                       <th scope="col" class="col-sm-2">Username</th>
+                       <th scope="col" class="col-sm-2">Email</th>
+                       <th scope="col" class="col-sm-2">Action</th>
+                   </tr>
+                </thead>
+                <tbody id="employeeList" >                               
+                </tbody> 
+            </table>
+           
+            <div id="listMessage"></div>
+            <button id="getEmployees" class="btn btn-md btn-primary btn-block btn-list">GET</button>
+            <div class="panel-footer">
+            </div>
+        </div>
+    </div>
+    
+    <script src="js/listEmployees.js"></script>
+
 </body>
 </html>

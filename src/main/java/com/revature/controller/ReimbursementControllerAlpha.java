@@ -20,10 +20,7 @@ public class ReimbursementControllerAlpha implements ReimbursementController {
 	private static final Logger logger = Logger.getLogger(ReimbursementControllerAlpha.class);
 	private static ReimbursementControllerAlpha reimbursementController = new ReimbursementControllerAlpha();
 
-	private ReimbursementControllerAlpha()
-	{
-
-	}
+	private ReimbursementControllerAlpha() {}
 
 	public static ReimbursementControllerAlpha getInstance()
 	{
@@ -38,13 +35,13 @@ public class ReimbursementControllerAlpha implements ReimbursementController {
 		if(loggedEmployee == null) {
 			return "login.html";
 		} else if (loggedEmployee.getEmployeeRole().getId() == 2) {
-			return "leader-home.html";
+			logger.trace("Managers cannot access this page.");
+			return "403.html";
 		} else if (request.getMethod().equals("GET")){
-			return "submit.html";
+			return "lackey-submit.html";
 		} 
 
-		logger.trace(loggedEmployee.toString());
-		Employee manager = new Employee ();
+		Employee manager = new Employee();
 
 		Reimbursement reimbursement = new Reimbursement(
 				0,
@@ -53,10 +50,10 @@ public class ReimbursementControllerAlpha implements ReimbursementController {
 				Double.parseDouble(request.getParameter("amount")),
 				request.getParameter("description"),
 				loggedEmployee,
-				null,
+				manager,
 				new ReimbursementStatus(1, "PENDING"),
-				new ReimbursementType( Integer.parseInt(request.getParameter("reimbursementTypeId")),
-						request.getParameter("reimbursementTypeName"))
+				new ReimbursementType((int) Integer.parseInt(request.getParameter("reimbursementTypeId")),
+						request.getParameter("reimbursementType"))
 				);
 
 		if(ReimbursementServiceAlpha.getInstance().submitRequest(reimbursement)) {
@@ -68,7 +65,7 @@ public class ReimbursementControllerAlpha implements ReimbursementController {
 
 	@Override
 	public Object singleRequest(HttpServletRequest request) {
-		logger.trace("ReimbursementControllerAlpha.submitRequest");
+		logger.trace("Getting a single request");
 
 		Employee loggedEmployee = (Employee) request.getSession().getAttribute("loggedEmployee);");
 
@@ -102,21 +99,47 @@ public class ReimbursementControllerAlpha implements ReimbursementController {
 		if(loggedEmployee == null) {
 			return "login.html";
 		}
-
-		if ( request.getParameter("fetch") == null && loggedEmployee.getEmployeeRole().getId() == 1) {
-			return "reimbursement.html";
-		} else if ( request.getParameter("fetch") == null && loggedEmployee.getEmployeeRole().getId() == 1) {
-			return "managerReimbursement.html";
-		} else if ( request.getParameter("fetch").equals("pending") && loggedEmployee.getEmployeeRole().getId() == 1) {
-			return ReimbursementServiceAlpha.getInstance().getUserPendingRequests(loggedEmployee);
-		} else if ( request.getParameter("fetch").equals("resolved") && loggedEmployee.getEmployeeRole().getId() == 1) {
-			return ReimbursementServiceAlpha.getInstance().getUserFinalizedRequests(loggedEmployee);
-		} else if ( request.getParameter("fetch").equals("pending") && loggedEmployee.getEmployeeRole().getId() == 2) {
-			return ReimbursementServiceAlpha.getInstance().getAllPendingRequests();
-		} else if ( request.getParameter("fetch").equals("resolved") && loggedEmployee.getEmployeeRole().getId() == 2) {
-			return ReimbursementServiceAlpha.getInstance().getAllResolvedRequests();
+		if(loggedEmployee.getEmployeeRole().getId() == 1) {
+			if(request.getParameter("fetch") == null) {
+				return "lackey-pending.html";
+			} else if(request.getParameter("fetch").equals("resolved")) {
+				return "lackey-resolved.html";
+			} else if(request.getParameter("fetch").equals("finalized")) {
+				return ReimbursementServiceAlpha.getInstance().getUserFinalizedRequests(loggedEmployee);
+			} else if (request.getParameter("fetch").equals("pending")) {
+				logger.trace(loggedEmployee);
+				return ReimbursementServiceAlpha.getInstance().getUserPendingRequests(loggedEmployee);  
+			} else {
+				Set<Reimbursement> set = new HashSet<Reimbursement>(ReimbursementServiceAlpha.getInstance().getUserPendingRequests(loggedEmployee));
+				set.addAll(ReimbursementServiceAlpha.getInstance().getUserFinalizedRequests(loggedEmployee));				
+				return set;
+			}
 		}
-		return null;
+
+		else {
+			if(request.getParameter("fetch") == null) {
+				return "leader-pending.html";
+			} else if(request.getParameter("fetch").equals("resolved")){
+				return "leader-resolved.html";
+			} else if(request.getParameter("fetch").equals("finalized")){
+				return ReimbursementServiceAlpha.getInstance().getAllResolvedRequests();
+			} else if (request.getParameter("fetch").equals("pending")){
+				return ReimbursementServiceAlpha.getInstance().getAllPendingRequests();
+			} else if (request.getParameter("fetch").equals("viewSelected")){
+				logger.trace(loggedEmployee);
+				return "leader-reimbursements-list.html";
+			} else if (request.getParameter("fetch").equals("viewSelectedList")){     
+				Employee selectedEmployee = new Employee();
+				selectedEmployee.setId(Integer.parseInt(request.getParameter("id")));
+				Set<Reimbursement> set = new HashSet<Reimbursement>(ReimbursementServiceAlpha.getInstance().getUserPendingRequests(selectedEmployee));
+				set.addAll(ReimbursementServiceAlpha.getInstance().getUserFinalizedRequests(selectedEmployee));				
+				return set;
+			}
+
+			else {
+				return "leader-pending.html";
+			}
+		}
 	}
 
 	@Override
@@ -127,7 +150,7 @@ public class ReimbursementControllerAlpha implements ReimbursementController {
 			return "login.html";
 		}
 
-		if(loggedEmployee.getEmployeeRole().getId() == 2){			
+		if(loggedEmployee.getEmployeeRole().getId() == 2) {			
 			logger.trace("Finalizing a reimbursement can only be done by a Manager.");
 			return "403.html";
 		}
@@ -151,7 +174,7 @@ public class ReimbursementControllerAlpha implements ReimbursementController {
 		return new ClientMessage("Employee is not a manager");
 	}
 
-	
+
 	@Override
 	public Object getRequestTypes(HttpServletRequest request) {
 		Employee loggedEmployee = (Employee) request.getSession().getAttribute("loggedEmployee);");
@@ -159,8 +182,8 @@ public class ReimbursementControllerAlpha implements ReimbursementController {
 		if(loggedEmployee == null) {
 			return "login.html";
 		}
-		
+
 		return ReimbursementServiceAlpha.getInstance().getReimbursementTypes();
 	}
-	
-	}
+
+}

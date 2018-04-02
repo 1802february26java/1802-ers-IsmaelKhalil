@@ -16,6 +16,7 @@ import com.revature.model.Reimbursement;
 import com.revature.model.ReimbursementStatus;
 import com.revature.model.ReimbursementType;
 import com.revature.util.ConnectionUtil;
+import com.revature.util.FinalUtil;
 
 public class ReimbursementRepositoryJdbc implements ReimbursementRepository {
 
@@ -36,30 +37,30 @@ public class ReimbursementRepositoryJdbc implements ReimbursementRepository {
 	@Override
 	public boolean insert(Reimbursement reimbursement) {
 		try(Connection connection = ConnectionUtil.getConnection()) {
-			int statementIndex = 0;
-			String command = "INSERT INTO REIMBURSEMENT VALUES(NULL,?,?,?,?,NULL,?,?,?,?)";
+			final String SQL = "INSERT INTO REIMBURSEMENT(R_ID,R_REQUESTED,R_RESOLVED, R_AMOUNT,R_DESCRIPTION,R_RECEIPT,EMPLOYEE_ID,MANAGER_ID,RS_ID,RT_ID)"
+					+ " VALUES(NULL,?,NULL,?,?,?,?,?,?,?)";
+			PreparedStatement statement = connection.prepareStatement(SQL);
+			int parameterIndex = 0;
 
-			PreparedStatement statement = connection.prepareStatement(command);
+			statement.setDouble(++parameterIndex, reimbursement.getAmount());						
+			
+			statement.setTimestamp(++parameterIndex, Timestamp.valueOf(reimbursement.getRequested()));
+			statement.setDouble(++parameterIndex, reimbursement.getAmount());
+			statement.setString(++parameterIndex, reimbursement.getDescription());
 
-			//Set attributes to be inserted
-			statement.setTimestamp(++statementIndex, Timestamp.valueOf(reimbursement.getRequested()));
-			statement.setTimestamp(++statementIndex, Timestamp.valueOf(reimbursement.getResolved()));
-			statement.setDouble(++statementIndex, reimbursement.getAmount());
-			statement.setString(++statementIndex, reimbursement.getDescription());
-			statement.setInt(++statementIndex, reimbursement.getRequester().getId());
-			statement.setInt(++statementIndex, reimbursement.getApprover().getId());
-			statement.setInt(++statementIndex, reimbursement.getStatus().getId());
-			statement.setInt(++statementIndex, reimbursement.getType().getId());
+	        statement.setInt(++parameterIndex, reimbursement.getRequester().getId());
+			statement.setInt(++parameterIndex, reimbursement.getApprover().getId());
+			statement.setInt(++parameterIndex, reimbursement.getStatus().getId());
+			statement.setInt(++parameterIndex, reimbursement.getType().getId());
 
 			if(statement.executeUpdate() > 0) {
-				return true;
+				return true;	
 			}
 		} catch (SQLException e) {
-			logger.warn("Exception thrown while creating a new reimbursement request", e);
+			logger.error(FinalUtil.CLIENT_MESSAGE_SOMETHING_WRONG, e);
 		}
 		return false;
 	}
-
 
 	@Override
 	public boolean update(Reimbursement reimbursement) {
@@ -290,10 +291,10 @@ public class ReimbursementRepositoryJdbc implements ReimbursementRepository {
 
 			while(result.next()) {
 				reimbursementTypes.add(new ReimbursementType(
-				
-					result.getInt("RT_ID"),
-					result.getString("RT_TYPE")
-				));
+
+						result.getInt("RT_ID"),
+						result.getString("RT_TYPE")
+						));
 			}
 			return reimbursementTypes;
 		} catch (SQLException e) {

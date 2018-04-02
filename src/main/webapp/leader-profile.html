@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>View profile</title>
+
+    <link rel="icon" href="images/customer.ico" />
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+       
+    <!-- Boostrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+    
+    <!-- Boostrap JS -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <style>
+        body {
+			/* background image override */
+			background-image:  url(images/library.jpg);
+			background-size:   cover;
+		
+		}
+    </style>
+    <!-- Our CSS -->
+    <link rel="stylesheet" href="css/our.css" />
+
+</head>
+
+ <body>
+        <nav class="navbar navbar-default">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <a href="leader-home.do" class="navbar-brand"><strong>Hello, </strong><strong id="username">Home</strong></a>
+                    </div>
+                    
+                    <ul class="nav navbar-nav">
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><strong id="strong">Employees</strong><span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="viewAllEmployee.do">View Employees</a></li>
+                                <li><a href="register.do">Register an employee</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <ul class="nav navbar-nav">
+                                <li class="dropdown">
+                                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><strong id="strong">Reimbursement</strong><span class="caret"></span></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="multipleRequests.do">View all pending reimbursements</a></li>
+                                        <li><a href="multipleRequests.do?fetch=resolved">View all resolved reimbursements</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                    
+                    <div class="nav navbar-nav navbar-right">
+                        <a href="logout.do" class="navbar-brand"><strong><small>Logout</small></strong></a>
+                    </div>
+                    <div class="nav navbar-nav navbar-right">
+                        <a href="viewInfo.do" class="navbar-brand"><strong><small>Profile</small></strong></a>
+                    </div>
+                </div>
+            </nav>
+
+    <div class="col-md-10 col-md-offset-1">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3>User profile</h3>
+                </div>        
+                <table class="table table-bordered table-hover">
+                 <thead>
+                     <tr>
+                        <th scope="col" class="col-sm-2">First Name</th>
+                        <th scope="col" class="col-sm-2">Last Name</th>
+                        <th scope="col" class="col-sm-2">Username</th>
+                        <th scope="col" class="col-sm-2">email</th>
+                        <th scope="col" class="col-sm-2">User role</th>
+
+                    </tr>
+                 </thead>
+                 <tbody id="viewInfo" >                               
+                  </tbody> 
+                </table>
+                <div id="saveMessage"></div>
+                <button id="editProfile" class="btn btn-md btn-primary">EDIT</button>
+                <button id="saveProfile" class="btn btn-md btn-primary">SAVE</button>
+                <!-- pull-right-->
+               
+            </div>
+        </div>
+
+    <script src="js/viewInfo.js"></script>
+</body>
+</html>

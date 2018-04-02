@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>View resolved reimbursements</title>
+
+    <link rel="icon" href="images/customer.ico" />
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+       
+    <!-- Boostrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+    
+    <!-- Boostrap JS -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <style>
+        body {
+			/* background image override */
+			background-image:  url(images/boardroom.jpg);
+			background-size:   cover;
+		
+		}
+    </style>
+    <!-- Our CSS -->
+    <link rel="stylesheet" href="css/our.css" />
+
+</head>
+
+ <body>
+        <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a href="leader-home.do" class="navbar-brand"><strong>Hello, </strong><strong id="username">Home</strong></a>s
+            </div>
+            <ul class="nav navbar-nav">
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><strong>Operations</strong><span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="viewEmployeeList.do">View all employee info</a></li>
+                      	<li><a href="multipleRequests.do">View all pending reimbursements</a></li>
+                        <li><a href="multipleRequests.do?fetch=resolved">View all resolved reimbursements</a></li>
+                        <li><a href="viewInfo.do">View account info</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <div class="nav navbar-nav navbar-right">
+                <a href="logout.do" class="navbar-brand"><strong>Logout</strong></a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3>Resolved reimbursements</h3>
+                    <h3> Total: <span id="counter"></span></h3>
+                    <input type="text" id="filter" class="form-control" placeholder="Search...">
+                </div>        
+                <table class="table table-bordered table-hover">
+                 <thead>
+                     <tr>
+                        <th scope="col" class="col-sm-1">Reimbursement ID</th> 
+                        <th scope="col" class="col-sm-2">Request Date</th>
+                        <th scope="col" class="col-sm-2">Resolved Date</th>
+                        <th scope="col" class="col-sm-1">Amount($)</th>
+                        <th scope="col" class="col-sm-2">Description</th>
+                        <th scope="col" class="col-sm-1">Requester name</th>
+                        <th scope="col" class="col-sm-1">Request type</th>
+                        <th scope="col" class="col-sm-1">Request status</th>
+                    </tr>
+                 </thead>
+                 <tbody id="resolvedReimbursementsList" >                               
+                  </tbody> 
+                </table>
+
+                <div id="listMessage"></div>
+                <button id="getResolvedReimbursements" class="btn btn-md btn-primary btn-block btn-list">GET</button>
+                <div class="panel-footer">
+                </div>
+            </div>
+        </div>
+
+    <script src="js/leaderViewAllResolved.js"></script>
+</body>
+</html>

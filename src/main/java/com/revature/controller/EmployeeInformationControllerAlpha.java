@@ -24,24 +24,36 @@ public class EmployeeInformationControllerAlpha implements EmployeeInformationCo
 
 	@Override
 	public Object registerEmployee(HttpServletRequest request) {
+
+        Employee loggedEmployee = (Employee) request.getSession().getAttribute("loggedEmployee");
+		
+		if(loggedEmployee == null) {
+			return "login.html";
+			
+		}
+		if(loggedEmployee.getEmployeeRole().getId() == 1) {
+			return "403.html";
+			
+		}
+		
 		if(request.getMethod().equals("GET")) {
 			return "register.html";
 		}
 
-		// Logic for POST
-
+		EmployeeRole employeeRole = new EmployeeRole(1,"EMPLOYEE");
 		Employee employee = new Employee(0, 
 				request.getParameter("firstName"), 
 				request.getParameter("lastName"), 
 				request.getParameter("username"),	
 				request.getParameter("password"), 
-				request.getParameter("email"),
-				new EmployeeRole(Integer.parseInt(request.getParameter("employeeRoleID")))
+				request.getParameter("email"), employeeRole
 				);
 		
+		logger.trace(employee);
+
 		if(!EmployeeServiceAlpha.getInstance().isUsernameTaken(employee)) {
 			if(EmployeeServiceAlpha.getInstance().createEmployee(employee)) {
-			return new ClientMessage(FinalUtil.CLIENT_MESSAGE_REGISTRATION_SUCCESSFUL);
+				return new ClientMessage(FinalUtil.CLIENT_MESSAGE_REGISTRATION_SUCCESSFUL);
 			}
 		} else {
 			return new ClientMessage(FinalUtil.CLIENT_MESSAGE_USERNAME_TAKEN);
@@ -51,16 +63,13 @@ public class EmployeeInformationControllerAlpha implements EmployeeInformationCo
 
 	@Override
 	public Object updateEmployee(HttpServletRequest request) {
-		if (request.getMethod().equals("GET")){
-			return "login.html";
-		}
 
-		Employee loggedEmployee = (Employee) request.getSession().getAttribute("employee");
+		Employee loggedEmployee = (Employee) request.getSession().getAttribute("loggedEmployees");
 
 		if(loggedEmployee == null) {
 			return "login.html";
 		}
-		
+
 		Employee employee = new Employee (
 				loggedEmployee.getId(),
 				request.getParameter("firstName"),
@@ -79,39 +88,64 @@ public class EmployeeInformationControllerAlpha implements EmployeeInformationCo
 
 	@Override
 	public Object viewEmployeeInformation(HttpServletRequest request) {
-		if (request.getMethod().equals("GET")){
-			return "register.html";
-		}
 
 		Employee loggedEmployee = (Employee) request.getSession().getAttribute("loggedEmployee");
 
 		if(loggedEmployee == null) {
 			return "login.html";
-		} else {
-			return EmployeeServiceAlpha.getInstance().getEmployeeInformation(loggedEmployee);
+
 		}
+
+		if(loggedEmployee.getEmployeeRole().getId() == 1){
+			if(request.getParameter("fetch") == null) {
+				return "lackey-profile.html";
+			} else {
+				return EmployeeServiceAlpha.getInstance().getEmployeeInformation(loggedEmployee);
+			}
+		}
+
+		else {
+			if(request.getParameter("fetch") == null) {
+				return "leader-profile.html";
+			} else {
+				return EmployeeServiceAlpha.getInstance().getEmployeeInformation(loggedEmployee);
+			}
+		}
+
+
 	}
 
 	@Override
 	public Object viewAllEmployees(HttpServletRequest request) {
-		if (request.getMethod().equals("GET")){
-			return "register.html";
+        Employee loggedEmployee = (Employee) request.getSession().getAttribute("loggedEmployee");
+		
+		if(loggedEmployee == null ) {
+		   
+			return "login.html";
+			
+		}
+		if(loggedEmployee.getEmployeeRole().getId() == 1){
+			
+			logger.trace("Only Managers can view this.");
+			return "403.html";
+			
 		}
 
-		Employee loggedEmployee = (Employee) request.getSession().getAttribute("loggedEmployee");
-
-		if(loggedEmployee == null) {
-			return "login.html";
-		} else if(loggedEmployee.getEmployeeRole().getId() == 2) {
-			return EmployeeServiceAlpha.getInstance().getAllEmployeesInformation();
+		if(request.getParameter("fetch") == null) {
+			return "leader-employees-list.html";
 		} else {
-			return "404.html";
+		return EmployeeServiceAlpha.getInstance().getAllEmployeesInformation();
 		}
 	}
 
 	@Override
 	public Object usernameExists(HttpServletRequest request) {
-		// TODO Auto-generated method stub
-		return null;
+        Employee employee = new Employee(request.getParameter("username"));
+		   if(EmployeeServiceAlpha.getInstance().isUsernameTaken(employee)){
+			   return new ClientMessage("This username already exists..");
+		   }
+		   else{
+			   return new ClientMessage("This username can be used.");
+		   }
 	}
 }
